@@ -14,7 +14,7 @@ class User extends Controller {
         $title = "WorkTogether - Le réseau social de votre entreprise !";
         $description = "Bienvenue sur WorkTogether, le réseau social de votre entreprise, conçu pour connecter les employés et améliorer la collaboration. Rejoignez notre communauté dès maintenant !";
 
-        \Renderer::render('user/login',compact('title', 'description'));
+        \Renderer::render('auth/login',compact('title', 'description'));
     }
 
     public function signupForm()
@@ -22,7 +22,7 @@ class User extends Controller {
         $title = "WorkTogether - Inscription";
         $description = "S'inscrire à WorkTogether pour communiquer avec vos collègues via le réseau social d'entreprise !";
 
-        \Renderer::render('user/signup', compact('title', 'description'));
+        \Renderer::render('auth/signup', compact('title', 'description'));
     }
 
 
