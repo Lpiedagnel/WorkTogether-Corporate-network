@@ -22,7 +22,7 @@
     <ul>
         <li><a href="index.php?controller=message&action=feed">Fil d'actualité</a></li>
         <li><a href="index.php">Se connecter</a></li>
-        <li><a href="index.php?controller=user&action=signupform" role="button">Inscription</a></li>
+        <li><a href="index.php?controller=user&action=signup" role="button">Inscription</a></li>
     </ul>
 </nav>
 <!-- Main -->

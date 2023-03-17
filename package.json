@@ -4,7 +4,8 @@
   "description": "Social Media for enterprise with Pico.css and PHP.",
   "main": "index.php",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "sass --watch ./src/css/sass/main.scss:./src/css/style.css --style compressed"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Lpiedagnel/WorkTogether-Corporate-network/issues"
   },
-  "homepage": "https://github.com/Lpiedagnel/WorkTogether-Corporate-network#readme"
+  "homepage": "https://github.com/Lpiedagnel/WorkTogether-Corporate-network#readme",
+  "devDependencies": {
+    "save": "^2.9.0"
+  }
 }

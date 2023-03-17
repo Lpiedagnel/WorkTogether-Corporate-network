@@ -1,0 +1,68 @@
+// Margin
+.m {
+    &y- {
+        &0 {margin-top: 0em; margin-bottom: 0em;}
+        &1 {margin-top: 1em; margin-bottom: 1em;}
+        &2 {margin-top: 2em; margin-bottom: 2em;}
+        &3 {margin-top: 3em; margin-bottom: 3em;}
+        &4 {margin-top: 4em; margin-bottom: 4em;}
+        &5 {margin-top: 5em; margin-bottom: 5em;}
+    }
+}
+
+// Grid Layout
+.grid {
+
+    &-75 {
+        grid-column-gap: 3em;
+        grid-template-columns: auto 25%;
+    }
+
+    &-25 {
+        grid-column-gap: 3em;
+        grid-template-columns: auto 75%;
+    }
+}
+
+
+// Text
+.text {
+    &-center {
+        text-align: center;
+        align-items: center;
+    }
+
+    &-alert {
+        font-weight: bold;
+        color: red;
+    }
+
+    &-success {
+        font-weight: bold;
+        color: green;
+    }
+}
+
+// List
+.list {
+    &-none {
+        list-style: none;
+    }
+}
+
+// Border radius
+.radius {
+    &-5 {
+        border-radius: 5px;
+    }
+}
+
+// Flex
+.flex {
+    &-center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
