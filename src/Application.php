@@ -4,7 +4,7 @@ class Application {
     public static function process()
     {
         $controllerName = "User";
-        $action = "loginForm";
+        $action = "login";
 
         if (!empty($_GET['controller'])) {
             $controllerName = ucfirst($_GET['controller']);

@@ -9,12 +9,39 @@ class User extends Controller {
 
     protected $modelName = \Models\User::class;
 
-    public function loginForm()
+    public function login()
     {
+
+        if (isset($_POST['email']) && isset($_POST['password'])) {
+            // Store input into variables
+            $email = htmlspecialchars($_POST['email']);
+            $password = htmlspecialchars($_POST['password']);
+            
+            $message = null;
+            
+            // Check password
+            if (!$message) {
+                
+                $user = $this->model->findOne($email, 'email');
+            
+                if ($user && password_verify($password, $user['password'])) {
+                    $_SESSION['first_name'] = $user['first_name'];
+                    $_SESSION['last_name'] = $user['last_name'];
+                    $_SESSION['is_connected'] = true;
+                    $message = "Connexion réussie !";
+                    header("location: index.php?controller=message&action=feed");
+                    exit();
+                } else {
+                    $message = 'L\'utilisateur n\'a pas été trouvé. Vérifiez le mot de passe ou l\'adresse mail.';
+                }
+            }
+        }
+
         $title = "WorkTogether - Le réseau social de votre entreprise !";
         $description = "Bienvenue sur WorkTogether, le réseau social de votre entreprise, conçu pour connecter les employés et améliorer la collaboration. Rejoignez notre communauté dès maintenant !";
+        $message = $message === null ? '' : $message;
 
-        \Renderer::render('auth/login',compact('title', 'description'));
+        \Renderer::render('auth/login',compact('title', 'description', 'message'));
     }
 
     public function signup()
