@@ -25,6 +25,7 @@ class User extends Controller {
                 if ($user && password_verify($password, $user['password'])) {
                     $_SESSION['first_name'] = $user['first_name'];
                     $_SESSION['last_name'] = $user['last_name'];
+                    $_SESSION['id'] = $user['id'];
                     $_SESSION['is_connected'] = true;
                     $this->message = "Connexion réussie !";
                     header("location: index.php?controller=message&action=feed");

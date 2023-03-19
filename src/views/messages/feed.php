@@ -8,13 +8,13 @@
                 <h2>Quoi de neuf chez vos collègues ?</h2>
             </hgroup>
             <article>
-                <form>
-                    <label for="message">Votre message</label>
-                    <textarea name="message" cols="50" rows="2" placeholder="Qu'est-ce que vous allez raconter à vos collègues?" required></textarea>
+                <form action="index.php?controller=message&action=add" method="POST">
+                    <label for="text">Votre message</label>
+                    <textarea name="text" cols="50" rows="2" placeholder="Qu'est-ce que vous allez raconter à vos collègues?" required></textarea>
                     <label for="file">Téléchargez une image
                         <input type="file" name="file">
                     </label>
-                    <button type="submit" onclick="event.preventDefault()">Envoyez votre message</button>
+                    <button type="submit">Envoyez votre message</button>
                 </form>
             </article>
             <!-- Message -->

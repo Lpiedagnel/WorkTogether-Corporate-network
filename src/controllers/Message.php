@@ -18,4 +18,20 @@ class Message extends Controller {
 
         \Renderer::render('messages/feed',compact('title', 'description'));
     }
+
+    public function add()
+    {
+        $this->checkAuth();
+
+        if (isset($_POST) && isset($_POST['text'])) {
+            $data = [
+                'text' => htmlspecialchars($_POST['text']),
+                'author_id' => $_SESSION['id']
+                // 'file' => ***********
+            ];
+
+            $this->model->insert($data);
+            header('location: index.php?controller=message&action=feed');
+        }
+    }
 }
