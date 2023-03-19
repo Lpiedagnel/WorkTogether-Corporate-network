@@ -11,6 +11,8 @@ class Message extends Controller {
 
     public function feed()
     {
+        $this->checkAuth();
+        
         $title = "Fil d'actualité - WorkTogether !";
         $description = "Découvrez l'actualité de vos collègues sur WorkTogether.";
 

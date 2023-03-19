@@ -17,10 +17,8 @@ class User extends Controller {
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
             
-            $message = null;
-            
             // Check password
-            if (!$message) {
+            if ($this->message === null) {
                 
                 $user = $this->model->findOne($email, 'email');
             
@@ -28,25 +26,33 @@ class User extends Controller {
                     $_SESSION['first_name'] = $user['first_name'];
                     $_SESSION['last_name'] = $user['last_name'];
                     $_SESSION['is_connected'] = true;
-                    $message = "Connexion réussie !";
+                    $this->message = "Connexion réussie !";
                     header("location: index.php?controller=message&action=feed");
                     exit();
                 } else {
-                    $message = 'L\'utilisateur n\'a pas été trouvé. Vérifiez le mot de passe ou l\'adresse mail.';
+                    $this->message = 'L\'utilisateur n\'a pas été trouvé. Vérifiez le mot de passe ou l\'adresse mail.';
                 }
             }
         }
 
         $title = "WorkTogether - Le réseau social de votre entreprise !";
         $description = "Bienvenue sur WorkTogether, le réseau social de votre entreprise, conçu pour connecter les employés et améliorer la collaboration. Rejoignez notre communauté dès maintenant !";
-        $message = $message === null ? '' : $message;
+        $message = $this->message === null ? '' : $this->message;
 
         \Renderer::render('auth/login',compact('title', 'description', 'message'));
     }
 
+    public function logout()
+    {
+        $this->checkAuth();
+        session_destroy();
+        header("location: index.php");
+
+    }
+
     public function signup()
     {
-        $message = null;
+        $this->message = null;
 
         if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordConfirmation'])) {
             
@@ -60,24 +66,24 @@ class User extends Controller {
     
             // Check password
             if ($password !== $password_confirmation) {
-                $message = 'Les mots de passe doivent êtres identiques !';
+                $this->message = 'Les mots de passe doivent êtres identiques !';
             }
     
             // Check email
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $message = 'Vous devez rentrer un email valide';
+                $this->message = 'Vous devez rentrer un email valide';
             }
     
             // Password length
             if (strlen($password) <= 4) {
-                $message = "Vous devez choisir un mot de passe d'au moins 4 caractères !";
+                $this->message = "Vous devez choisir un mot de passe d'au moins 4 caractères !";
             }
     
             if (!isset($message)) {
                 $checkEmail = $this->model->findOne($email, 'email');
     
                 if ($checkEmail !== false) {
-                    $message = "L'utilisateur existe déjà.";
+                    $this->message = "L'utilisateur existe déjà.";
                 } else {
                     // Hash
                     $password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
@@ -93,14 +99,14 @@ class User extends Controller {
                     $this->model->insert($data);
     
                     // Back to index
-                    $message = "Enregistrement du compte réussi !";
+                    $this->message = "Enregistrement du compte réussi !";
                 }
             }
         }
 
         $title = "WorkTogether - Inscription";
         $description = "S'inscrire à WorkTogether pour communiquer avec vos collègues via le réseau social d'entreprise !";
-        $message = isset($message) ? $message : '';
+        $message = isset($this->message) ? $this->message : '';
 
         \Renderer::render('auth/signup', compact('title', 'description', 'message'));
     }
