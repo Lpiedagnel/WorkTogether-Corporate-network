@@ -6,8 +6,8 @@
             <h2>Bienvenue sur WorkTogether !</h2>
             </hgroup>
 
-            <?php if ($message !== ''): ?>
-                <p class="text-alert"><?= $message ?></p>
+            <?php if (isset($message['text']) && !$message['success']): ?>
+                <p class="text-alert"><?= $message['text'] ?></p>
             <?php endif ?>
 
             <form method="POST" action="index.php" >
