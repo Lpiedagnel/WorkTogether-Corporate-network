@@ -24,9 +24,13 @@ abstract class Model
         return $item;
     }
 
-    public function findAll(): array
+    public function findAll(?string $order = ""): array
     {
         $query = "SELECT * FROM {$this->table}";
+
+        if ($order) {
+            $query .= " ORDER BY " . $order;
+        }
 
         $items = $this->pdo->query($query)->fetchAll();
         return $items;

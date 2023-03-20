@@ -4,7 +4,7 @@
         <section>
             <!-- Post User -->
             <hgroup>
-                <h1>Bienvenue John Doe !</h1>
+                <h1>Bienvenue <?= $_SESSION['first_name'] . ' ' . $_SESSION['last_name'] ?> !</h1>
                 <h2>Quoi de neuf chez vos collègues ?</h2>
             </hgroup>
             <article>
@@ -17,13 +17,22 @@
                     <button type="submit">Envoyez votre message</button>
                 </form>
             </article>
-            <!-- Message -->
+
+            <?php foreach($posts as $post): ?>
             <article>
                 <div class="grid">
                     <img src="https://picsum.photos/100" alt="Photo de profil de l'utilisateur">
-                    <h3>John Doe</h3>
+                    <div class="my-2">
+                        <h3 class="my-0"><?= $post['authorFirstName'] . ' ' . $post['authorLastName'] ?></h3>
+                        <?php if ($post['authorJob']): ?>
+                            <h6 class="my-0"><?= $post['authorJob'] ?></h6>
+                        <?php endif ?>
+                        <small>Le <?= date('d/m/Y',strtotime($post['created_at']))   ?></small>
+                    </div>
                 </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt doloribus est ipsa ipsam minima reprehenderit sequi nulla sed aspernatur, ex veritatis magni recusandae impedit amet eos veniam tempora quisquam.</p>
+                <p>
+                    <?= $post['text'] ?>
+                </p>
                 <div class="my-1">
                     <a href="#">&#x1F499; J'aime ! (3)</a>
                 </div>
@@ -54,81 +63,8 @@
                     </ul>
                 </details>
             </article>
-            <!-- Message -->
-            <article>
-                <div class="grid">
-                    <img src="https://picsum.photos/100" alt="Photo de profil de l'utilisateur">
-                    <h3>John Doe</h3>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt doloribus est ipsa ipsam minima reprehenderit sequi nulla sed aspernatur, ex veritatis magni recusandae impedit amet eos veniam tempora quisquam.</p>
-                <div class="my-1">
-                    <a href="#">&#x1F499; J'aime ! (3)</a>
-                </div>
-                <details>
-                    <summary>Commentaires (2)</summary>
-                    <ul>
-                        <li class="list-none">
-                            <form>
-                                <h4>Votre commentaire</h4>
-                                <input type="text" name="comment">
-                                <a href="#" role="button">Commenter</a>
-                            </form>
-                        </li>
-                        <li class="list-none my-2">
-                            <div class="grid grid-25">
-                                <img src="https://picsum.photos/75" alt="Photo de profil de l'utilisateur" class="radius-5"> 
-                                <h4 class="text-center">Jane Doe</h4>
-                            </div>
-                            <p class="my-1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium debitis numquam fugiat explicabo cupiditate velit facilis non maiores sint eos exercitationem harum illum fugit consequuntur, temporibus iste deserunt ipsa cumque.</p>
-                        </li>
-                        <li class="list-none my-2">
-                            <div class="grid grid-25">
-                                <img src="https://picsum.photos/75" alt="Photo de profil de l'utilisateur" class="radius-5"> 
-                                <h4 class="text-center">Jane Doe</h4>
-                            </div>
-                            <p class="my-1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium debitis numquam fugiat explicabo cupiditate velit facilis non maiores sint eos exercitationem harum illum fugit consequuntur, temporibus iste deserunt ipsa cumque.</p>
-                        </li>
-                    </ul>
-                </details>
-            </article>
-            <!-- Message -->
-            <article>
-                <div class="grid">
-                    <img src="https://picsum.photos/100" alt="Photo de profil de l'utilisateur">
-                    <h3>John Doe</h3>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aut deserunt doloribus est ipsa ipsam minima reprehenderit sequi nulla sed aspernatur, ex veritatis magni recusandae impedit amet eos veniam tempora quisquam.</p>
-                <div class="my-1">
-                    <a href="#">&#x1F499; J'aime ! (3)</a>
-                </div>
-                <details>
-                    <summary>Commentaires (2)</summary>
-                    <ul>
-                        <li class="list-none">
-                            <form>
-                                <h4>Votre commentaire</h4>
-                                <input type="text" name="comment">
-                                <a href="#" role="button">Commenter</a>
-                            </form>
-                        </li>
-                        <li class="list-none my-2">
-                            <div class="grid grid-25">
-                                <img src="https://picsum.photos/75" alt="Photo de profil de l'utilisateur" class="radius-5"> 
-                                <h4 class="text-center">Jane Doe</h4>
-                            </div>
-                            <p class="my-1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium debitis numquam fugiat explicabo cupiditate velit facilis non maiores sint eos exercitationem harum illum fugit consequuntur, temporibus iste deserunt ipsa cumque.</p>
-                        </li>
-                        <li class="list-none my-2">
-                            <div class="grid grid-25">
-                                <img src="https://picsum.photos/75" alt="Photo de profil de l'utilisateur" class="radius-5"> 
-                                <h4 class="text-center">Jane Doe</h4>
-                            </div>
-                            <p class="my-1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium debitis numquam fugiat explicabo cupiditate velit facilis non maiores sint eos exercitationem harum illum fugit consequuntur, temporibus iste deserunt ipsa cumque.</p>
-                        </li>
-                    </ul>
-                </details>
-            </article>
-        </section>
+            <?php endforeach ?>
+
         <!-- Aside -->
         <aside>
             <h3>Vous connaissez peut-être</h3>

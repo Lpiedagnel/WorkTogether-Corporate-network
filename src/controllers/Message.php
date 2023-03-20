@@ -3,6 +3,7 @@
 namespace Controllers;
 
 require_once('src/autoload.php');
+require_once('src/models/User.php');
 
 
 class Message extends Controller {
@@ -12,11 +13,25 @@ class Message extends Controller {
     public function feed()
     {
         $this->checkAuth();
-        
+
+        $allPosts = $this->model->findAll("created_at DESC");
+        $userModel = new \Models\User;
+
+        $posts = [];
+
+        foreach($allPosts as $post)
+        {
+            $author = $userModel->findOne($post['author_id'], 'id');
+            $post['authorFirstName'] = $author['first_name'];
+            $post['authorLastName'] = $author['last_name'];
+            $post['authorJob'] = $author['job'];
+            $posts[] = $post;
+        }
+
         $title = "Fil d'actualité - WorkTogether !";
         $description = "Découvrez l'actualité de vos collègues sur WorkTogether.";
 
-        \Renderer::render('messages/feed',compact('title', 'description'));
+        \Renderer::render('messages/feed',compact('title', 'description', 'posts'));
     }
 
     public function add()
