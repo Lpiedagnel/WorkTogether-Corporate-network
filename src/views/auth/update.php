@@ -10,21 +10,28 @@
         <!-- Form -->
         <form action="index.php?controller=user&action=update" method="post">
             <h1 class="my-1">Modifier votre profil</h1>
+
+            <?php if (isset($message['text']) && $message['success']): ?>
+                    <p class="text-success"><?= $message['text'] ?></p>
+                <?php elseif (isset($message['text']) && !$message['success']): ?>
+                    <p class="text-alert"><?= $message['text'] ?></p>
+                <?php endif ?>
+                
             <div>
                 <label for="firstName">Prénom
-                    <input type="text" name="firstName" placeholder="Votre prénom" aria-label="first name" autocomplete="firstname" required>
+                    <input type="text" name="firstName" placeholder="Votre prénom" aria-label="first name" autocomplete="firstname" value="<?= $user['first_name'] ?>" required>
                 </label>
                 <label for="lastName">
                     Nom
-                    <input type="text" name="lastName" placeholder="Votre nom de famille" aria-label="last name" autocomplete="lastname" required>
+                    <input type="text" name="lastName" placeholder="Votre nom de famille" aria-label="last name" autocomplete="lastname" value="<?= $user['last_name'] ?> "required>
                 </label>
                 <label for="job">
                     Fonction dans l'entreprise
-                    <input type="text" name="job" placeholder="Votre poste dans l'entreprise" aria-label="job" autocomplete="job">
+                    <input type="text" name="job" placeholder="Votre poste dans l'entreprise" aria-label="job" autocomplete="job" value="<?= $user['job'] ?>">
                 </label>
                 <label for="email">
                     Email
-                    <input type="email" name="email" placeholder="Votre adresse mail" aria-label="mail" autocomplete="mail" required>
+                    <input type="email" name="email" placeholder="Votre adresse mail" aria-label="mail" autocomplete="mail" value="<?= $user['email'] ?>" required>
                 </label>
                 <label for="password">
                     Modifier votre mot de passe
