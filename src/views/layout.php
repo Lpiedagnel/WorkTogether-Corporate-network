@@ -23,7 +23,7 @@
         <li><a href="index.php?controller=message&action=feed">Accueil</a></li>
         <?php if (isset($_SESSION['is_connected'])): ?>
             <li><a href="index.php?controller=user&action=logout">Déconnexion</a></li>
-            <li><a href="#" role="button">Profil</a></li>
+            <li><a href="index.php?controller=user&action=update" role="button">Profil</a></li>
         <?php else: ?>
             <li><a href="index.php">Se connecter</a></li>
             <li><a href="index.php?controller=user&action=signup" role="button">Inscription</a></li>

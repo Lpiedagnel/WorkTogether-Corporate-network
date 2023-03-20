@@ -118,4 +118,12 @@ class User extends Controller {
 
         \Renderer::render('auth/signup', compact('title', 'description', 'message'));
     }
+
+    public function update()
+    {
+        $title = "Modifier son profil - WorkTogether";
+        $description = "Modifiez votre profil WorkTogether ici !";
+
+        \Renderer::render('auth/update', compact('title', 'description'));
+    }
 }

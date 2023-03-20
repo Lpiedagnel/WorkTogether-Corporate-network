@@ -64,7 +64,7 @@
                 </details>
             </article>
             <?php endforeach ?>
-
+        </section>
         <!-- Aside -->
         <aside>
             <h3>Vous connaissez peut-être</h3>
