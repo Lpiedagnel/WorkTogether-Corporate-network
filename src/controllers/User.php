@@ -25,6 +25,7 @@ class User extends Controller {
                 if ($user && password_verify($password, $user['password'])) {
                     $_SESSION['first_name'] = $user['first_name'];
                     $_SESSION['last_name'] = $user['last_name'];
+                    $_SESSION['email'] = $user['email'];
                     $_SESSION['id'] = $user['id'];
                     $_SESSION['is_connected'] = true;
                     $this->message['text'] = "Connexion réussie !";
@@ -152,7 +153,12 @@ class User extends Controller {
 
             if (!isset($this->message['text']) && $this->message['success'] !== false) {
                 $checkEmail = $this->model->findOne($email, 'email');
+    
+                if ($checkEmail !== false && $checkEmail['email'] !== $_SESSION['email']) {
+                    $this->message['text'] = "L'utilisateur existe déjà.";
+                    $this->message['success'] = false;
 
+                } else {
                     // Hash
                     $password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
                     // Get data
@@ -165,16 +171,17 @@ class User extends Controller {
                     ];
                     // Store to database
                     $this->model->update($_SESSION['id'] ,$data);
-
+    
                     // Update session
                     $_SESSION['first_name'] = $data['first_name'];
                     $_SESSION['last_name'] = $data['last_name'];
+                    $_SESSION['email'] = $data['email'];
     
                     // Back to index
                     $this->message['text'] = "Modification du compte réussi !";
                     $this->message['success'] = true;
+                }
             }
-
         }
 
         $this->checkAuth();
