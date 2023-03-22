@@ -194,4 +194,61 @@ class User extends Controller {
 
         \Renderer::render('auth/update', compact('title', 'description', 'user', 'message'));
     }
+
+    public function upload()
+    {
+        if (!empty($_FILES)) {
+
+            // File type validation
+            $allowed_types = ['image/jpeg', 'image/jpg', 'image/png'];
+            $file_type = mime_content_type($_FILES['avatar']['tmp_name']);
+            if (!in_array($file_type, $allowed_types)) {
+                $this->message['text'] = "Format de fichier invalide. Vous devez utiliser une image au format .jpg, .jpeg ou .png.";
+                $this->message['success'] = false;
+            }
+
+            // Limit file size
+            $max_size = 1024 * 1024;
+            if ($_FILES['avatar']['size'] > $max_size) {
+                $this->message['text'] = "Le poids de l'image ne doit pas excéder 1 MB.";
+                $this->message['success'] = false;
+            }
+
+            // Upload
+            if (!isset($this->message['text']) && $this->message['success'] !== false) {
+
+                // Rename
+                $file_name = $_SESSION['id'] . '.jpg';
+
+                // Upload file
+                $target_dir = 'uploads/avatars/';
+                if (!file_exists($target_dir)) {
+                    mkdir($target_dir);
+                }
+
+                $target_path = $target_dir . $file_name;
+                $message['text'] = $target_path;
+                if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $target_path)) {
+                    $message['text'] = "Erreur dans l'hébergement de l'avatar.";
+                    $message['success'] = false;
+                    die();
+                }
+
+                // Store to database
+                $data = [
+                    'avatar_path' => $file_name
+                ];
+                // Store to database
+                $this->model->update($_SESSION['id'] ,$data);
+            }
+        }
+        $user = $this->model->findOne($_SESSION['id'], 'id');
+        $title = "Modifier votre profil - WorkTogether";
+        $description = "Modifiez votre profil WorkTogether ici !";
+        $message['text'] = $this->message['text'] === null ? '' : $this->message['text'];
+        $message['success'] = $this->message['success'] === true ? true : false;
+
+        \Renderer::render('auth/update', compact('title', 'description', 'user', 'message'));
+
+    }
 }

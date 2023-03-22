@@ -2,10 +2,11 @@
     <div class="grid">
         <!-- Upload avatar -->
         <article class="mx-2">
-            <img class="radius-5" src="https://picsum.photos/800"" alt="Avatar de l'utilisateur">
-            <form action="index.php?controller=user&action=upload" method="post"></form>
-            <input type="file" name="file" require>
-            <button type="submit">Changer votre photo de profil</button>
+            <img class="radius-5" src="uploads/avatars/<?= $user['avatar_path'] ?>" alt="Avatar de l'utilisateur">
+            <form action="index.php?controller=user&action=upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" required>
+                <button type="submit">Changer votre photo de profil</button>
+            </form>
         </article>
         <!-- Form -->
         <form action="index.php?controller=user&action=update" method="post">

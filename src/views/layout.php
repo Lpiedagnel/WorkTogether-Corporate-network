@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>WorkTogether - Le réseau social d'entreprise</title>
-    <meta name="description" content="WorkTogether est le réseau social pour votre entreprise !">
+    <title><?= $title ?></title>
+    <meta name="description" content="<?= $description ?>">
     <link rel="shortcut icon" href="https://picocss.com/favicon.ico">
     <link rel="canonical" href="https://picocss.com/examples/sign-in/">
 
