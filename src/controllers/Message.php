@@ -24,6 +24,7 @@ class Message extends Controller {
             $author = $userModel->findOne($post['author_id'], 'id');
             $post['authorFirstName'] = $author['first_name'];
             $post['authorLastName'] = $author['last_name'];
+            $post['authorAvatar'] = $author['avatar_path'];
             $post['authorJob'] = $author['job'];
             $posts[] = $post;
         }
