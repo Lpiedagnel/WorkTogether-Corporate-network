@@ -40,10 +40,10 @@
                     <summary>Commentaires (2)</summary>
                     <ul>
                         <li class="list-none">
-                            <form>
+                            <form action="index.php?controller=comment&action=add" method="POST">
                                 <h4>Votre commentaire</h4>
                                 <input type="text" name="comment">
-                                <a href="#" role="button">Commenter</a>
+                                <button type="submit">Commenter</button>
                             </form>
                         </li>
                         <li class="list-none my-2">
