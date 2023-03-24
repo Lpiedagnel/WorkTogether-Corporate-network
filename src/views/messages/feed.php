@@ -37,7 +37,7 @@
                     <a href="#">&#x1F499; J'aime ! (3)</a>
                 </div>
                 <details>
-                    <summary>Commentaires (2)</summary>
+                    <summary>Commentaires (<?= count($post['comments']) ?>)</summary>
                     <ul>
                         <li class="list-none">
                             <form action="index.php?controller=comment&action=add" method="POST">
@@ -47,20 +47,21 @@
                                 <button type="submit">Commenter</button>
                             </form>
                         </li>
+                        <?php foreach($post['comments'] as $comment): ?>
                         <li class="list-none my-2">
                             <div class="grid grid-25">
-                                <img src="https://picsum.photos/75" alt="Photo de profil de l'utilisateur" class="radius-5"> 
-                                <h4 class="text-center">Jane Doe</h4>
+                                <img src="uploads/avatars/<?= $comment['authorAvatar'] ?>"alt="Photo de profil de l'utilisateur" class="radius-5"> 
+                                <div class="text-center">
+                                    <h4 class="my-0"><?= $comment['authorFirstName'] . ' ' . $comment['authorLastName'] ?> </h4>
+                                    <small><?= $comment['authorJob'] . " - le " . date('d/m/Y',strtotime($comment['created_at'])) ?></small>
+                                    <hr>
+                                </div>
                             </div>
-                            <p class="my-1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium debitis numquam fugiat explicabo cupiditate velit facilis non maiores sint eos exercitationem harum illum fugit consequuntur, temporibus iste deserunt ipsa cumque.</p>
+                            <p class="my-1">
+                                <?= $comment['text'] ?>
+                            </p>
                         </li>
-                        <li class="list-none my-2">
-                            <div class="grid grid-25">
-                                <img src="https://picsum.photos/75" alt="Photo de profil de l'utilisateur" class="radius-5"> 
-                                <h4 class="text-center">Jane Doe</h4>
-                            </div>
-                            <p class="my-1">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium debitis numquam fugiat explicabo cupiditate velit facilis non maiores sint eos exercitationem harum illum fugit consequuntur, temporibus iste deserunt ipsa cumque.</p>
-                        </li>
+                        <?php endforeach ?>
                     </ul>
                 </details>
             </article>

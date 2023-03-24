@@ -24,9 +24,13 @@ abstract class Model
         return $item;
     }
 
-    public function findAll(?string $order = ""): array
+    public function findAll(?string $order = "", ?string $where = ""): array
     {
         $query = "SELECT * FROM {$this->table}";
+
+        if ($where) {
+            $query .= " WHERE " . $where;
+        }
 
         if ($order) {
             $query .= " ORDER BY " . $order;
