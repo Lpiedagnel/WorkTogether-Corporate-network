@@ -42,7 +42,8 @@
                         <li class="list-none">
                             <form action="index.php?controller=comment&action=add" method="POST">
                                 <h4>Votre commentaire</h4>
-                                <input type="text" name="comment">
+                                <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+                                <input type="text" name="text">
                                 <button type="submit">Commenter</button>
                             </form>
                         </li>
