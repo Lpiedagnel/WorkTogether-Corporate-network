@@ -31,4 +31,27 @@ class Content extends Controller
             header('location: index.php?controller=message&action=feed');
         }
     }
+
+    public function delete()
+    {
+        if (isset($_GET['id']) && isset($_SESSION['id'])) {
+            
+            $this->checkAuth();
+
+            $contentId = htmlspecialchars($_GET['id']);
+            $authorId = $_SESSION['id'];
+
+            if ($content = $this->model->findOne($contentId, 'id')) {
+
+                // Check if user has the right to delete the content
+                if ($authorId === $content['author_id']) {
+                    $this->model->delete($contentId);
+                }
+            }
+
+        }
+        
+    header("location: index.php?controller=message&action=feed");
+
+    }
 }

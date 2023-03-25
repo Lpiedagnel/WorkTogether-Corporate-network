@@ -35,6 +35,10 @@
                 </p>
                 <div class="my-1">
                     <a href="#">&#x1F499; J'aime ! (3)</a>
+                    <?php if ($_SESSION['id'] === $post['author_id']): ?>
+                        <a href="#" class="mx-2"> Éditer</a>
+                        <a href="index.php?controller=message&action=delete&id=<?= $post['id'] ?>" class="mx-2">Supprimer</a>
+                    <?php endif ?>
                 </div>
                 <details>
                     <summary>Commentaires (<?= count($post['comments']) ?>)</summary>
@@ -60,6 +64,12 @@
                             <p class="my-1">
                                 <?= $comment['text'] ?>
                             </p>
+                            <small>
+                                <?php if ($_SESSION['id'] === $comment['author_id']): ?>
+                                    <a href="#" class="mx-2"> Éditer</a>
+                                    <a href="index.php?controller=comment&action=delete&id=<?= $comment['id'] ?>" class="mx-2">Supprimer</a>
+                                <?php endif ?>
+                            </small>
                         </li>
                         <?php endforeach ?>
                     </ul>
