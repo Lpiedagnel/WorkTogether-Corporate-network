@@ -66,11 +66,9 @@ abstract class Model
         $statement->execute($data);
     }
 
-
-
-    public function delete(int $id): void
+    public function delete(string $column, $value): void
     {
-        $query = "DELETE FROM {$this->table} WHERE id = $id";
+        $query = "DELETE FROM {$this->table} WHERE {$column} = $value";
         $statement = $this->pdo->prepare($query);
         $statement->execute();
     }

@@ -45,7 +45,13 @@ class Content extends Controller
 
                 // Check if user has the right to delete the content
                 if ($authorId === $content['author_id']) {
-                    $this->model->delete($contentId);
+                    $this->model->delete('id', $contentId);
+
+                    // Delete commentary
+                    if ($this->model instanceof \Models\Message) {
+                        $commentModel = new \Models\Comment;
+                        $commentModel->delete('message_id', $contentId);
+                    }
                 }
             }
 

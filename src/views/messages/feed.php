@@ -37,7 +37,7 @@
                     <a href="#">&#x1F499; J'aime ! (3)</a>
                     <?php if ($_SESSION['id'] === $post['author_id']): ?>
                         <a href="#" class="mx-2"> Éditer</a>
-                        <a href="index.php?controller=message&action=delete&id=<?= $post['id'] ?>" class="mx-2">Supprimer</a>
+                        <a href="#" class="mx-2" onclick="deleteAlert(<?= $post['id'] ?>, 'message')">Supprimer</a>
                     <?php endif ?>
                 </div>
                 <details>
@@ -67,7 +67,7 @@
                             <small>
                                 <?php if ($_SESSION['id'] === $comment['author_id']): ?>
                                     <a href="#" class="mx-2"> Éditer</a>
-                                    <a href="index.php?controller=comment&action=delete&id=<?= $comment['id'] ?>" class="mx-2">Supprimer</a>
+                                    <a href="#" class="mx-2" onclick="deleteAlert(<?= $comment['id'] ?>, 'comment')">Supprimer</a>
                                 <?php endif ?>
                             </small>
                         </li>

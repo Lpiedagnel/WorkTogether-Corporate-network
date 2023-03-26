@@ -10,8 +10,8 @@
 
     <!-- Pico.css -->
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
-
     <link rel="stylesheet" href="src/css/style.css">
+    <script src="src/js/script.js"></script>
 </head>
 <body>
 <!-- Nav -->
