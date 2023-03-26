@@ -32,6 +32,39 @@ class Content extends Controller
         }
     }
 
+    public function update()
+    {
+        // Check
+        if (isset($_GET['id']) && isset($_SESSION['id'])) {
+
+            $this->checkAuth();
+
+            $contentId = htmlspecialchars($_GET['id']);
+            $controller = htmlspecialchars($_GET['controller']);
+
+            if ($post = $this->model->findOne($contentId, 'id')) {
+
+                $title = "Modifier un message - WorkTogether";
+                $description = "Vous pouvez modifier votre message ici.";
+        
+                \Renderer::render('messages/update',compact('title', 'description', 'post'));
+
+            } else {
+                $message['text'] = "Contenu non trouvé";
+                $message['success'] = false;
+            }
+        }
+
+
+
+        // Get previous values
+        
+
+        // If submit
+            // Check values
+            // Return 
+    }
+
     public function delete()
     {
         if (isset($_GET['id']) && isset($_SESSION['id'])) {
@@ -57,7 +90,7 @@ class Content extends Controller
 
         }
         
-    header("location: index.php?controller=message&action=feed");
+        header("location: index.php?controller=message&action=feed");
 
     }
 }
