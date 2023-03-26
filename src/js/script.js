@@ -4,3 +4,4 @@ function deleteAlert(id, model) {
         window.location.href= `index.php?controller=${model}&action=delete&id=${id}`
     }
 }
+
