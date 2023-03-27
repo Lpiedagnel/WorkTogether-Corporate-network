@@ -19,7 +19,7 @@ class Content extends Controller
                 // 'file' => ***********
             ];
 
-        // If postId, check if post exist on database
+        // If postId, check if message exist on database and get the id for the commentary
         if (isset($_POST['post_id'])) {
             $postId = htmlspecialchars($_POST['post_id']);
             $messageModel = new \Models\Message;
@@ -42,15 +42,27 @@ class Content extends Controller
             $contentId = htmlspecialchars($_GET['id']);
             $controller = htmlspecialchars($_GET['controller']);
 
-            if ($post = $this->model->findOne($contentId, 'id')) {
+            if (($post = $this->model->findOne($contentId, 'id'))) {
 
-                $title = "Modifier un message - WorkTogether";
-                $description = "Vous pouvez modifier votre message ici.";
-        
-                \Renderer::render('messages/update',compact('title', 'description', 'post'));
+                // If submit
+                if (isset($_POST) && isset($_POST['text']) && $post['author_id'] === $_SESSION['id']) {
+                    $data = [
+                        'text' => htmlspecialchars($_POST['text']),
+                        // file
+                    ];
+
+                    $this->model->update($post['id'], $data);
+                    header('location: index.php?controller=message&action=feed');
+                    
+                } else {
+                    $title = "Modifier un message - WorkTogether";
+                    $description = "Vous pouvez modifier votre message ici.";
+            
+                    \Renderer::render('messages/update',compact('title', 'description', 'post', 'controller'));
+                }
 
             } else {
-                $message['text'] = "Contenu non trouvé";
+                $message['text'] = "Contenu non trouvé ou non autorisé.";
                 $message['success'] = false;
             }
         }
