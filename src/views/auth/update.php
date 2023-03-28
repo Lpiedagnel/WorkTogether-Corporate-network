@@ -2,9 +2,9 @@
     <div class="grid">
         <!-- Upload avatar -->
         <article class="mx-2">
-            <img class="radius-5" src="uploads/avatars/<?= $user['avatar_path'] ?>" alt="Avatar de l'utilisateur">
+            <img class="radius-5" src="<?= $user['img_path'] ?>" alt="Avatar de l'utilisateur">
             <form action="index.php?controller=user&action=upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" required>
+                <input type="file" name="img" accept="image/png, image/jpeg, image/jpg" required>
                 <button type="submit">Changer votre photo de profil</button>
             </form>
         </article>

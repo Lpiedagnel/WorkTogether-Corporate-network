@@ -25,7 +25,7 @@ class Message extends Content
             $author = $userModel->findOne($post['author_id'], 'id');
             $post['authorFirstName'] = $author['first_name'];
             $post['authorLastName'] = $author['last_name'];
-            $post['authorAvatar'] = $author['avatar_path'];
+            $post['authorAvatar'] = $author['img_path'];
             $post['authorJob'] = $author['job'];
             
             // Get comments
@@ -39,7 +39,7 @@ class Message extends Content
                 $author = $userModel->findOne($comment['author_id'], 'id');
                 $comment['authorFirstName'] = $author['first_name'];
                 $comment['authorLastName'] = $author['last_name'];
-                $comment['authorAvatar'] = $author['avatar_path'];
+                $comment['authorAvatar'] = $author['img_path'];
                 $comment['authorJob'] = $author['job'];
                 $comments[] = $comment;
             }

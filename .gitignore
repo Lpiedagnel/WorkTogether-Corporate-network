@@ -1,1 +1,3 @@
 /node_modules
+/uploads/*
+!uploads/default_avatar.jpg

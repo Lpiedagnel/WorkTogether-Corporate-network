@@ -21,7 +21,7 @@
             <?php foreach($posts as $post): ?>
             <article>
                 <div class="flex-around">
-                    <img class="img-125 radius-50" src="uploads/avatars/<?= $post['authorAvatar'] ?>" alt="Photo de profil de l'utilisateur">
+                    <img class="img-125 radius-50" src="<?= $post['authorAvatar'] ?>" alt="Photo de profil de l'utilisateur">
                     <div class="my-2">
                         <h3 class="my-0"><?= $post['authorFirstName'] . ' ' . $post['authorLastName'] ?></h3>
                         <?php if ($post['authorJob']): ?>
