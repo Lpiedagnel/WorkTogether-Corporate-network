@@ -199,7 +199,12 @@ class User extends Controller {
 
     public function upload()
     {
-        $message = Upload::upload($this->model, $this->message);
+        $message = Upload::checkUpload($_FILES);
+        if (!isset($message)) {
+            list($message, $target_path) = Upload::upload($this->model);
+            $data = ['img_path' => $target_path];
+            $this->model->update($_SESSION['id'], $data);
+        }
 
         $user = $this->model->findOne($_SESSION['id'], 'id');
         $title = "Modifier votre profil - WorkTogether";

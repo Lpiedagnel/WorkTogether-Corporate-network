@@ -2,6 +2,8 @@
 
 namespace Controllers;
 
+use Upload;
+
 require_once('src/autoload.php');
 require_once('src/models/User.php');
 require_once('src/models/Message.php');
@@ -15,8 +17,7 @@ class Content extends Controller
         if (isset($_POST) && isset($_POST['text'])) {
             $data = [
                 'text' => htmlspecialchars($_POST['text']),
-                'author_id' => $_SESSION['id'],
-                // 'file' => ***********
+                'author_id' => $_SESSION['id']
             ];
 
         // If postId, check if message exist on database and get the id for the commentary
@@ -27,8 +28,14 @@ class Content extends Controller
                 $data['message_id'] = $postId;
             }
         }
-            $this->model->insert($data);
-            header('location: index.php?controller=message&action=feed');
+        // Check if upload
+        if (isset($_FILES['img'])) {
+            list($message, $target_path) = Upload::upload($this->model);
+            $data += ['img_path' => $target_path]; 
+        }
+
+        $this->model->insert($data);
+        header('location: index.php?controller=message&action=feed');
         }
     }
 
@@ -66,15 +73,6 @@ class Content extends Controller
                 $message['success'] = false;
             }
         }
-
-
-
-        // Get previous values
-        
-
-        // If submit
-            // Check values
-            // Return 
     }
 
     public function delete()
