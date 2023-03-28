@@ -33,6 +33,13 @@
                 <p>
                     <?= $post['text'] ?>
                 </p>
+                <?php
+                // If img
+                if ($post['img_path'] !== null) {
+                    echo '<img src="' . $post['img_path'] . '" alt="Image du message">';
+                }
+                
+                ?>
                 <div class="my-1">
                     <a href="#">&#x1F499; J'aime ! (3)</a>
                     <?php if ($_SESSION['id'] === $post['author_id']): ?>

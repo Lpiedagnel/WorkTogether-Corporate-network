@@ -32,7 +32,11 @@ class upload
     public static function upload(object $model)
     {           
         // Rename
-        $file_name = $_SESSION['id'] . '.jpg';
+        if (get_class($model) === 'Models\User') {
+            $file_name = $_SESSION['id'] . '.jpg';
+        } else {
+            $file_name = $_SESSION['id'] . '_' . time() . '.jpg';
+        }
 
         $modelName = str_replace('Models\\', '/' ,get_class($model)); 
         $target_dir = 'uploads' . $modelName . '/';
