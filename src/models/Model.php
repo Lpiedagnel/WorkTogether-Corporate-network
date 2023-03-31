@@ -14,10 +14,15 @@ abstract class Model
         $this->pdo = \Database::getPdo();
     }
 
-    public function findOne($value, string $column)
+    public function findOne($value, string $column, string $and = '')
     {
 
-        $result = $this->pdo->prepare("SELECT * FROM {$this->table} WHERE {$column}= :{$column}");
+        $query = "SELECT * FROM {$this->table} WHERE {$column}= :{$column}";
+
+        $query .= isset($and) ? $and : '';
+
+        $result = $this->pdo->prepare($query);
+
         $result->execute([$column => $value]);
         $item = $result->fetch();
 

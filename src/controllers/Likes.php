@@ -20,9 +20,13 @@ class Likes extends Controller
                 "user_id" => $_SESSION['id']
             ];
 
-            $this->model->insert($data);
+            // Check if already like
+            $and = " AND type = 'message' AND user_id = {$data['user_id']}";
+            if (!$this->model->findOne($data['post_id'], 'post_id', $and)) {
+                $this->model->insert($data);
+            }
+            
             header('location: index.php?controller=message&action=feed');
-
         }
     }
 }
