@@ -20,13 +20,21 @@ class Likes extends Controller
                 "user_id" => $_SESSION['id']
             ];
 
-            // Check if already like
             $and = " AND type = 'message' AND user_id = {$data['user_id']}";
-            if (!$this->model->findOne($data['post_id'], 'post_id', $and)) {
+
+            // If already like
+            if ($currentLike = $this->model->findOne($data['post_id'], 'post_id', $and)) {
+                $this->model->delete('id', $currentLike['id']);
+            } else {
+            // If not already like
                 $this->model->insert($data);
             }
             
-            header('location: index.php?controller=message&action=feed');
+            // Echo the update number of ajax
+            $likes = $this->model->findAll("", 'post_id ='. $data['post_id']);
+            $likesNumber = count($likes);
+
+            echo json_encode($likesNumber);
         }
     }
 }

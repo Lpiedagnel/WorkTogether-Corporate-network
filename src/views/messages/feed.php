@@ -41,8 +41,10 @@
                 
                 ?>
                 <div class="my-1">
-                    <a href="index.php?controller=likes&action=add&type=message&id=<?= $post['id'] ?>">&#x1F499; J'aime ! (<?= $post['likesNumber'] ?>)</a>
+                    <!-- Like button -->
+                    <a href="#" onclick="changeLike(event, 'message', <?= $post['id'] ?>)">&#x1F499; J'aime ! <?= $post['likesNumber'] > 0 ? "({$post['likesNumber']})" : "" ?></a>
                     <?php if ($_SESSION['id'] === $post['author_id']): ?>
+                       <!-- If author --> 
                         <a href="index.php?controller=message&action=update&id=<?= $post['id'] ?>" class="mx-2"> Éditer</a>
                         <a href="#" class="mx-2" onclick="deleteAlert(<?= $post['id'] ?>, 'message')">Supprimer</a>
                     <?php endif ?>
