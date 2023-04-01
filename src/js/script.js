@@ -6,12 +6,12 @@ function deleteAlert(id, model) {
 }
 
 // Change like with Ajax
-function changeLike(e, type, id) {
+function changeLike(e, id) {
 
     e.preventDefault()
 
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', `index.php?controller=likes&action=add&type=${type}&id=${id}`, true)
+    xhr.open('GET', `index.php?controller=likes&action=add&id=${id}`, true)
 
     xhr.onload = function() {
         if (this.status == 200) {

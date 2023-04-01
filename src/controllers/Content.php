@@ -8,7 +8,7 @@ require_once('src/autoload.php');
 require_once('src/models/User.php');
 require_once('src/models/Message.php');
 
-class Content extends Controller 
+abstract class Content extends Controller 
 {
     public function add()
     {
