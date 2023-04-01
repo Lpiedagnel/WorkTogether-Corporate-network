@@ -54,9 +54,20 @@ class Message extends Content
             $posts[] = $post;
         }
 
+        // Get Users
+        $users = [];
+
+        $allUsers = $userModel->findAll();
+
+        foreach ($allUsers as $user) {
+            $users[] = $user;
+        }
+
+        shuffle($users);
+
         $title = "Fil d'actualité - WorkTogether !";
         $description = "Découvrez l'actualité de vos collègues sur WorkTogether.";
 
-        \Renderer::render('messages/feed',compact('title', 'description', 'posts'));
+        \Renderer::render('messages/feed',compact('title', 'description', 'posts', 'users'));
     }
 }

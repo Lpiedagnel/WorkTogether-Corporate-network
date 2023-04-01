@@ -5,20 +5,33 @@ function deleteAlert(id, model) {
     }
 }
 
-// Change like with Ajax
-function changeLike(e, id) {
+// Update interaction with AJAX
+function socialInteraction(e, controller, id) {
 
     e.preventDefault()
 
     const xhr = new XMLHttpRequest()
-    xhr.open('GET', `index.php?controller=likes&action=add&id=${id}`, true)
+    xhr.open('GET', `index.php?controller=${controller}&action=add&id=${id}`, true)
 
     xhr.onload = function() {
         if (this.status == 200) {
-            const likesCount = JSON.parse(this.responseText)
+
             const link = e.target
 
-            link.innerHTML = `&#x1F499; J'aime ! ${likesCount > 0 ? "("+likesCount+")" : ""}`
+            switch (controller) {
+                case "likes":
+                    const likesCount = JSON.parse(this.responseText)
+                    link.innerHTML = `&#x1F499; J'aime ! ${likesCount > 0 ? "("+likesCount+")" : ""}`
+                    break
+                
+                case "follow":
+                    link.className = "outline"
+                    link.innerHTML = "suivi"
+                    break
+
+                default:
+                    break
+            }
         }
     }
 

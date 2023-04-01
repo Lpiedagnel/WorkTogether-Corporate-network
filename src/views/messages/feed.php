@@ -42,7 +42,7 @@
                 ?>
                 <div class="my-1">
                     <!-- Like button -->
-                    <a href="#" onclick="changeLike(event, <?= $post['id'] ?>)">&#x1F499; J'aime ! <?= $post['likesNumber'] > 0 ? "({$post['likesNumber']})" : "" ?></a>
+                    <a href="#" onclick="socialInteraction(event, 'likes', <?= $post['id'] ?>)">&#x1F499; J'aime ! <?= $post['likesNumber'] > 0 ? "({$post['likesNumber']})" : "" ?></a>
                     <?php if ($_SESSION['id'] === $post['author_id']): ?>
                        <!-- If author --> 
                         <a href="index.php?controller=message&action=update&id=<?= $post['id'] ?>" class="mx-2"> Éditer</a>
@@ -89,26 +89,13 @@
         <!-- Aside -->
         <aside>
             <h3>Vous connaissez peut-être</h3>
+            <?php foreach ($users as $user): ?>
             <div class="my-2 flex-center">
-                <img class="img-200 radius-5" src="https://picsum.photos/300/200" alt="Photo de l'utilisateur">
-                <h4 class="my-0">Jane Doe</h4>
-                <a class="t-center" role="button" href="#">Suivre</a>
+                <img class="img-200 radius-5" src="<?= $user['img_path'] ?>" alt="Photo de <?= $user['first_name'] ?>">
+                <h4 class="my-0"><?= $user['first_name'] . ' ' . $user['last_name'] ?></h4>
+                <a class="t-center" role="button" href="#" onclick="socialInteraction(event, 'follow', <?= $post['id'] ?>)">Suivre</a>
             </div>
-            <div class="my-2 flex-center">
-                <img class="img-200 radius-5" src="https://picsum.photos/300/200" alt="Photo de l'utilisateur">
-                <h4 class="my-0">Jane Doe</h4>
-                <a class="t-center" role="button" href="#">Suivre</a>
-            </div>
-            <div class="my-2 flex-center">
-                <img class="img-200 radius-5" src="https://picsum.photos/300/200" alt="Photo de l'utilisateur">
-                <h4 class="my-0">Jane Doe</h4>
-                <a class="t-center" role="button" href="#">Suivre</a>
-            </div>
-            <div class="my-2 flex-center">
-                <img class="img-200 radius-5" src="https://picsum.photos/300/200" alt="Photo de l'utilisateur">
-                <h4 class="my-0">Jane Doe</h4>
-                <a class="t-center" role="button" href="#">Suivre</a>
-            </div>
+           <?php endforeach ?> 
         </aside>
     </div>
 

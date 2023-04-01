@@ -1,0 +1,12 @@
+<?php
+
+namespace Controllers;
+
+require_once('src/autoload.php');
+
+class Follow extends Social
+{
+    protected $modelName = \Models\Follow::class;
+    protected $target_id = "followed_id";
+    protected $trigger_id = "follower_id";
+}
