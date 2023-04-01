@@ -16,11 +16,16 @@ class Message extends Content
         $allPosts = $this->model->findAll("created_at DESC");
         $userModel = new \Models\User;
         $commentModel = new \Models\Comment;
+        $likesModel = new \Models\Likes;
 
         $posts = [];
 
         foreach($allPosts as $post)
         {
+            // Get likes
+            $likes = $likesModel->findAll("", 'post_id =' . $post['id']);
+            $post['likesNumber'] = count($likes);
+
             // Get author
             $author = $userModel->findOne($post['author_id'], 'id');
             $post['authorFirstName'] = $author['first_name'];
