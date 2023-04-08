@@ -93,7 +93,7 @@
             <div class="my-2 flex-center">
                 <img class="img-200 radius-5" src="<?= $user['img_path'] ?>" alt="Photo de <?= $user['first_name'] ?>">
                 <h4 class="my-0"><?= $user['first_name'] . ' ' . $user['last_name'] ?></h4>
-                <a class="t-center" role="button" href="#" onclick="socialInteraction(event, 'follow', <?= $post['id'] ?>)">Suivre</a>
+                <a class="t-center" role="button" href="#" onclick="socialInteraction(event, 'follow', <?= $user['id'] ?>)">Suivre</a>
             </div>
            <?php endforeach ?> 
         </aside>
