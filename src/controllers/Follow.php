@@ -14,4 +14,9 @@ class Follow extends Social
         $items = $this->model->getFollowing();
         print_r($items);
     }
+
+    public function getNotFollowing() {
+        $items = $this->model->getNotFollowing();
+        print_r($items);
+    }
 }

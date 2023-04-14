@@ -17,6 +17,7 @@ class Message extends Content
         $userModel = new \Models\User;
         $commentModel = new \Models\Comment;
         $likesModel = new \Models\Likes;
+        $followModel = new \Models\Follow;
 
         $posts = [];
 
@@ -54,20 +55,23 @@ class Message extends Content
             $posts[] = $post;
         }
 
-        // Get Users
+        // Get Users who followed
+        /*
         $users = [];
 
-        $allUsers = $userModel->findAll();
+        $allFollowed = $followModel->getFollowing();
 
-        foreach ($allUsers as $user) {
-            $users[] = $user;
+        foreach ($allFollowed as $user) {
+            $user = $userModel->findOne($user['followed_id'], 'id');
+            $allFollowed[] = $user;
         }
-
-        shuffle($users);
+        
+        shuffle($allFollowed);
+        */
 
         $title = "Fil d'actualité - WorkTogether !";
         $description = "Découvrez l'actualité de vos collègues sur WorkTogether.";
 
-        \Renderer::render('messages/feed',compact('title', 'description', 'posts', 'users'));
+        \Renderer::render('messages/feed',compact('title', 'description', 'posts'));
     }
 }
