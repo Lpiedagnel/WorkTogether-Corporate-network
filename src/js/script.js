@@ -25,8 +25,8 @@ function socialInteraction(e, controller, id) {
                     break
                 
                 case "follow":
-                    link.className = "outline"
-                    link.innerHTML = "suivi"
+                    link.className = link.className === "t-center" ? "outline" : "t-center";
+                    link.textContent = link.textContent === "Suivre" ? "Suivi" : "Suivre";
                     break
 
                 default:

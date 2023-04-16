@@ -55,23 +55,19 @@ class Message extends Content
             $posts[] = $post;
         }
 
-        // Get Users who followed
-        /*
+        // Get Users who not followed
         $users = [];
 
-        $allFollowed = $followModel->getFollowing();
+        $notFollowed = $followModel->getNotFollowing(5);
 
-        foreach ($allFollowed as $user) {
-            $user = $userModel->findOne($user['followed_id'], 'id');
-            $allFollowed[] = $user;
+        foreach ($notFollowed as $user) {
+            $user = $userModel->findOne($user['id'], 'id');
+            $users[] = $user;
         }
-        
-        shuffle($allFollowed);
-        */
 
         $title = "Fil d'actualité - WorkTogether !";
         $description = "Découvrez l'actualité de vos collègues sur WorkTogether.";
 
-        \Renderer::render('messages/feed',compact('title', 'description', 'posts'));
+        \Renderer::render('messages/feed',compact('title', 'description', 'posts', 'users'));
     }
 }

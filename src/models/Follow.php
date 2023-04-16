@@ -11,20 +11,32 @@ class Follow extends Model
     public function getFollowing() 
     {   
         $userId = $_SESSION['id'];
-
-        $query = "SELECT followed_id FROM follow WHERE follower_id = $userId";
-
-        $items = $this->pdo->query($query)->fetchAll();
+    
+        $query = "SELECT followed_id FROM follow WHERE follower_id = :user_id";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':user_id', $userId, $this->pdo::PARAM_INT);
+        $stmt->execute();
+        $items = $stmt->fetchAll();
         return $items;
     }
 
-    public function getNotFollowing() 
+    public function getNotFollowing(int $limit = null) 
     {
         $userId = $_SESSION['id'];
 
-        $query = "SELECT id FROM users WHERE id NOT IN (SELECT following_id FROM follows WHERE follower_id = $userId";
-
-        $items = $this->pdo->query($query)->fetchAll();
+        $query = "SELECT id FROM users WHERE id NOT IN (SELECT followed_id FROM follow WHERE follower_id = :user_id)";
+    
+        if ($limit > 0) {
+            $query .= " ORDER BY RAND() LIMIT :limit";
+        }
+    
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindValue(':user_id', $userId, $this->pdo::PARAM_INT);
+        if ($limit > 0) {
+            $stmt->bindValue(':limit', $limit, $this->pdo::PARAM_INT);
+        }
+        $stmt->execute();
+        $items = $stmt->fetchAll();
         return $items;
     }
     
