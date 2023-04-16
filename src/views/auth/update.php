@@ -86,26 +86,13 @@
     <article>
         <h2 class="my-1">Vous suivez</h2>
         <div class="grid-auto">
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" class="outline" href="#">Suivi</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" class="outline" href="#">Suivi</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" class="outline" href="#">Suivi</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" class="outline" href="#">Suivi</a>
-            </div>
+            <?php foreach ($followedUsers as $follow): ?>
+                <div class="text-center">
+                    <img class="radius-5 img-200" src="<?= $follow['img_path'] ?>" alt="Avatar de <?= $follow['first_name'] ?>">
+                    <h5 class="my-0"><?= $follow['first_name'] ?> <?= $follow['last_name'] ?></h5>
+                    <a class="outline" role="button" href="#" onclick="socialInteraction(event, 'follow', <?= $follow['id'] ?>)">Suivi</a>
+                </div>
+            <?php endforeach ?> 
         </div>
     </article>
 </div>

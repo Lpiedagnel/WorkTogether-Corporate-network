@@ -189,12 +189,24 @@ class User extends Controller {
         $this->checkAuth();
         $user = $this->model->findOne($_SESSION['id'], 'id');
 
+        // Get following
+        $followedUsers = [];
+
+        $followModel = new \Models\Follow;
+
+        $followed = $followModel->getFollowing();
+
+        foreach ($followed as $follow) {
+            $follow = $this->model->findOne($follow['followed_id'], 'id');
+            $followedUsers[] = $follow;
+        }
+
         $title = "Modifier son profil - WorkTogether";
         $description = "Modifiez votre profil WorkTogether ici !";
         $message['text'] = $this->message['text'] === null ? '' : $this->message['text'];
         $message['success'] = $this->message['success'] === true ? true : false;
 
-        \Renderer::render('auth/update', compact('title', 'description', 'user', 'message'));
+        \Renderer::render('auth/update', compact('title', 'description', 'user', 'message', 'followedUsers'));
     }
 
     public function upload()
