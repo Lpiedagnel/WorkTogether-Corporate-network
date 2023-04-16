@@ -47,42 +47,26 @@
         </form>
     </div>
     <!-- Followers -->
+    <?php if (count($followerUsers) > 0):  ?>
     <article>
         <h2 class="my-1">Ils vous suivent</h2>
         <div class="grid-auto">
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" href="#">Suivre</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" class="outline" href="#">Suivi</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" class="outline" href="#">Suivi</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" href="#">Suivre</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" href="#">Suivre</a>
-            </div>
-            <div class="text-center">
-                <img class="radius-5" src="https://picsum.photos/100" alt="Photo de l'utilisateur">
-                <h5 class="my-0">Jane Doe</h5>
-                <a role="button" href="#">Suivre</a>
-            </div>
+            <?php foreach ($followerUsers as $follow): ?>
+                <div class="text-center">
+                    <img class="radius-5 img-200" src="<?= $follow['img_path'] ?>" alt="Photo de <?= $follow['first_name'] ?>">
+                    <h5 class="my-0"><?= $follow['first_name'] ?> <?= $follow['last_name'] ?></h5>
+                    <?php if ($follow['isFollowing']): ?>
+                        <a class="outline" role="button" href="#" onclick="socialInteraction(event, 'follow', <?= $follow['id'] ?>)">Suivi</a>
+                        <?php else: ?> 
+                        <a class="t-center" role="button" href="#" onclick="socialInteraction(event, 'follow', <?= $follow['id'] ?>)">Suivre</a>
+                    <?php endif ?> 
+                </div>
+            <?php endforeach ?>
         </div>
     </article>
+    <?php endif ?>
     <!-- Following -->
+    <?php if (count($followedUsers) > 0):  ?>
     <article>
         <h2 class="my-1">Vous suivez</h2>
         <div class="grid-auto">
@@ -95,4 +79,5 @@
             <?php endforeach ?> 
         </div>
     </article>
+    <?php endif ?>
 </div>

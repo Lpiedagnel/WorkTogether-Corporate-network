@@ -189,10 +189,24 @@ class User extends Controller {
         $this->checkAuth();
         $user = $this->model->findOne($_SESSION['id'], 'id');
 
-        // Get following
+        $followModel = new \Models\Follow;
+
+        // Get followers
+        $followerUsers = [];
+
+        $follower = $followModel->getFollowers();
+
+        foreach ($follower as $follow) {
+            $follow = $this->model->findOne($follow['id'], 'id');
+
+            $follow['isFollowing'] = $followModel->isFollowing($follow['id']);
+
+            $followerUsers[] = $follow;
+        }     
+
+        // Get followed
         $followedUsers = [];
 
-        $followModel = new \Models\Follow;
 
         $followed = $followModel->getFollowing();
 
@@ -206,7 +220,7 @@ class User extends Controller {
         $message['text'] = $this->message['text'] === null ? '' : $this->message['text'];
         $message['success'] = $this->message['success'] === true ? true : false;
 
-        \Renderer::render('auth/update', compact('title', 'description', 'user', 'message', 'followedUsers'));
+        \Renderer::render('auth/update', compact('title', 'description', 'user', 'message', 'followedUsers', 'followerUsers'));
     }
 
     public function upload()
