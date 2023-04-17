@@ -1,5 +1,6 @@
 <div class="container">
     <div class="grid">
+        
         <!-- Upload avatar -->
         <article class="mx-2">
             <img class="radius-5" src="<?= $user['img_path'] ?>" alt="Avatar de l'utilisateur">
@@ -8,10 +9,12 @@
                 <button type="submit">Changer votre photo de profil</button>
             </form>
         </article>
+
         <!-- Form -->
         <form action="index.php?controller=user&action=update" method="post">
             <h1 class="my-1">Modifier votre profil</h1>
 
+            <!-- If message -->
             <?php if (isset($message['text']) && $message['success']): ?>
                     <p class="text-success"><?= $message['text'] ?></p>
                 <?php elseif (isset($message['text']) && !$message['success']): ?>
@@ -46,6 +49,7 @@
             <button type="submit">Modifier votre profil</button>
         </form>
     </div>
+
     <!-- Followers -->
     <?php if (count($followerUsers) > 0):  ?>
     <article>
@@ -65,6 +69,7 @@
         </div>
     </article>
     <?php endif ?>
+
     <!-- Following -->
     <?php if (count($followedUsers) > 0):  ?>
     <article>
@@ -80,5 +85,8 @@
         </div>
     </article>
     <?php endif ?>
-    <a href="index.php?controller=user&action=delete" role="button" class="contrast my-1">Supprimer votre compte</a>
+
+    <!-- Delete button -->
+    <a href="index.php?controller=user&action=delete&id=<?= $user['id'] ?>" role="button" class="contrast my-1" onclick="deleteAlert(<?= $user['id'] ?>, 'user')">Supprimer votre compte</a>
+
 </div>

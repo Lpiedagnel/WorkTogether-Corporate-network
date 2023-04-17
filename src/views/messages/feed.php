@@ -49,6 +49,7 @@
                         <a href="#" class="mx-2" onclick="deleteAlert(<?= $post['id'] ?>, 'message')">Supprimer</a>
                     <?php endif ?>
                 </div>
+               <!-- Comments --> 
                 <details>
                     <summary>Commentaires (<?= count($post['comments']) ?>)</summary>
                     <ul>
@@ -63,7 +64,7 @@
                         <?php foreach($post['comments'] as $comment): ?>
                         <li class="list-none my-2">
                             <div class="grid grid-25">
-                                <img src="uploads/avatars/<?= $comment['authorAvatar'] ?>"alt="Photo de profil de l'utilisateur" class="radius-5"> 
+                                <img src="<?= $comment['authorAvatar'] ?>"alt="Photo de profil de l'utilisateur" class="radius-5"> 
                                 <div class="text-center">
                                     <h4 class="my-0"><?= $comment['authorFirstName'] . ' ' . $comment['authorLastName'] ?> </h4>
                                     <small><?= $comment['authorJob'] . " - le " . date('d/m/Y',strtotime($comment['created_at'])) ?></small>

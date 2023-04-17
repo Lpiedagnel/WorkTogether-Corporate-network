@@ -29,7 +29,7 @@ abstract class Content extends Controller
             }
         }
         // Check if upload
-        if (isset($_FILES['img'])) {
+        if ((!empty($_FILES['img']['name']))) {
             list($message, $target_path) = Upload::upload($this->model);
             $data += ['img_path' => $target_path]; 
         }
