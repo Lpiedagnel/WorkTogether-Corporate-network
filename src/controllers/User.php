@@ -123,8 +123,7 @@ class User extends Controller {
     }
 
     public function update()
-    {
-        
+    {   
         if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordConfirmation'])) {
 
             // Store input into variables
@@ -244,12 +243,36 @@ class User extends Controller {
     public function delete()
     {
         // Check auth
+        $this->checkAuth();
+
+        $id = htmlspecialchars($_GET['id']);
+        $userId = htmlspecialchars($_SESSION['id']);
+
+        if ($userId === $id) {
+
+            $followModel = new \Models\Follow;
+            $messageModel = new \Models\Message;
+            $commentModel = new \Models\Comment;
+            
+            // Delete follow
+            $followModel->delete('follower_id', $userId);
+            $followModel->delete('followed_id', $userId);
+            
+            // Delete messages
+            $messageModel->delete('author_id', $userId);
+
+            // Delete comments
+            $commentModel->delete('author_id', $userId);
+    
+            // Delete user
+            $this->model->delete('id', $userId);
+
+            // Redirect
+            return header("location: index.php?controller=user&action=login");
+        }
         
-
-        // Delete follow
-
-        // Delete messages
-
-        // Delete user
+        $this->message['text'] = "Vous n'avez pas l'autorisation de supprimer ce compte.";
+        $this->message = false;
+        return header("location: index.php?controller=user&action=update");
     }
 }
