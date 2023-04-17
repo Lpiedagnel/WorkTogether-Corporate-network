@@ -240,4 +240,16 @@ class User extends Controller {
 
         \Renderer::render('auth/update', compact('title', 'description', 'user', 'message'));
     }
+
+    public function delete()
+    {
+        // Check auth
+        
+
+        // Delete follow
+
+        // Delete messages
+
+        // Delete user
+    }
 }

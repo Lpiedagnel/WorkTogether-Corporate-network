@@ -1,6 +1,23 @@
 // Delete button alert
 function deleteAlert(id, model) {
-    if (window.confirm(`Êtes-vous sûr(e) de supprimer ce ${model === 'message' ? 'message' : 'commentaire'} ?`)) {
+
+    let validation = false
+
+    switch (model) {
+        case "message":
+            validation = window.confirm('Souhaitez-vous vraiment supprimer ce message ?') ? true : false
+            break
+        case "comment":
+            validation = window.confirm('Souhaitez-vous supprimer ce commentaire ?') ? true : false
+            break
+        case "user":
+            validation = window.confirm('Souhaitez-vous supprimer ce compte ?') ? true : false
+            break
+        default:
+            break
+    }
+
+    if (validation === true) {
         window.location.href= `index.php?controller=${model}&action=delete&id=${id}`
     }
 }

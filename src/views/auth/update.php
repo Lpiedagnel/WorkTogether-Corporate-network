@@ -80,4 +80,5 @@
         </div>
     </article>
     <?php endif ?>
+    <a href="index.php?controller=user&action=delete" role="button" class="contrast my-1">Supprimer votre compte</a>
 </div>
