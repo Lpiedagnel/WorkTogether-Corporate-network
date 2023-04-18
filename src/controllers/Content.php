@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Exception;
 use Upload;
 
 require_once('src/autoload.php');
@@ -84,23 +85,30 @@ abstract class Content extends Controller
             $contentId = htmlspecialchars($_GET['id']);
             $authorId = $_SESSION['id'];
 
-            if ($content = $this->model->findOne($contentId, 'id')) {
-
-                // Check if user has the right to delete the content
-                if ($authorId === $content['author_id']) {
-                    $this->model->delete('id', $contentId);
-
-                    // Delete commentary
-                    if ($this->model instanceof \Models\Message) {
-                        $commentModel = new \Models\Comment;
-                        $commentModel->delete('message_id', $contentId);
+            try {
+                if ($content = $this->model->findOne($contentId, 'id')) {
+                    
+                    // Check if user has the right to delete the content
+                    if ($authorId === $content['author_id']) {
+                        $this->model->delete('id', $contentId);
+                        
+                        // Delete commentary
+                        if ($this->model instanceof \Models\Message) {
+                            $commentModel = new \Models\Comment;
+                            $commentModel->delete('message_id', $contentId);
+                        }
                     }
+                    $_SESSION['message'] = "Suppression réussie !";
                 }
+            } catch (\Exception $e) {
+                if ($e instanceof \PDOException) {
+                    $_SESSION['error_message'] = "Une erreur est survenue dans la connexion à la base de données. Réessayez plus tard !";
+                } else {
+                    $_SESSION['error_message'] = "Une erreur est survenue. Réessayez plus tard !";
+                }
+            } finally {
+                header("location: index.php?controller=message&action=feed");
             }
-
         }
-        
-        header("location: index.php?controller=message&action=feed");
-
     }
 }

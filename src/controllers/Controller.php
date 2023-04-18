@@ -12,10 +12,6 @@ abstract class Controller
     {
         session_start();
         $this->model = new $this->modelName();
-        $this->message = [
-            'text' => null, 
-            'success' => null
-        ];
     }
 
     public function checkAuth()
