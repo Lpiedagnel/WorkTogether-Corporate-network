@@ -5,13 +5,6 @@
                 <h1>S'inscrire</h1>
                 <h2>Rejoignez vos collègues sur WorkTogether !</h2>
                 </hgroup>
-                
-                <?php if (isset($message['text']) && $message['success']): ?>
-                    <p class="text-success"><?= $message['text'] ?></p>
-                <?php elseif (isset($message['text']) && !$message['success']): ?>
-                    <p class="text-alert"><?= $message['text'] ?></p>
-                <?php endif ?>
-
                 <form action="index.php?controller=user&action=signup" method="POST"> 
                     <div class="grid">
                         <div>
