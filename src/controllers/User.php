@@ -13,40 +13,37 @@ class User extends Controller {
 
     public function login()
     {
-
         if (isset($_POST['email']) && isset($_POST['password'])) {
             // Store input into variables
             $email = htmlspecialchars($_POST['email']);
             $password = htmlspecialchars($_POST['password']);
             
             // Check password
-            if ($this->message['text'] === null) {
+            try {
                 
                 $user = $this->model->findOne($email, 'email');
-            
+
                 if ($user && password_verify($password, $user['password'])) {
                     $_SESSION['first_name'] = $user['first_name'];
                     $_SESSION['last_name'] = $user['last_name'];
                     $_SESSION['email'] = $user['email'];
                     $_SESSION['id'] = $user['id'];
                     $_SESSION['is_connected'] = true;
-                    $this->message['text'] = "Connexion réussie !";
-                    $this->message['success'] = true;
+                    $_SESSION['message'] = "Connexion réussie !";
                     header("location: index.php?controller=message&action=feed");
-                    exit();
                 } else {
-                    $this->message['text'] = 'L\'utilisateur n\'a pas été trouvé. Vérifiez le mot de passe ou l\'adresse mail.';
-                    $this->message['success'] = false;
+                    throw New \Exception();
                 }
+
+            } catch (\Exception $e) {
+                $_SESSION['error_message'] = "Connexion échouée. Vérifiez l'adresse mail ou le mot de passe.";
             }
         }
 
         $title = "WorkTogether - Le réseau social de votre entreprise !";
         $description = "Bienvenue sur WorkTogether, le réseau social de votre entreprise, conçu pour connecter les employés et améliorer la collaboration. Rejoignez notre communauté dès maintenant !";
-        $message['text'] = $this->message['text'] === null ? '' : $this->message['text'];
-        $message['success'] = $this->message['success'] === true ? true : false;
 
-        \Renderer::render('auth/login',compact('title', 'description', 'message'));
+        \Renderer::render('auth/login',compact('title', 'description'));
     }
 
     public function logout()
