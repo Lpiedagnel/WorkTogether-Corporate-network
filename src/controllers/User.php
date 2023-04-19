@@ -241,7 +241,12 @@ class User extends Controller {
         $id = htmlspecialchars($_GET['id']);
         $userId = htmlspecialchars($_SESSION['id']);
 
-        if ($userId === $id) {
+        try {
+
+            // Check if user has the right to delete this account.
+            if ($userId !== $id) {
+                throw new \Exception("Vous n'avez pas la permission de supprimer ce compte.");
+            }
 
             $followModel = new \Models\Follow;
             $messageModel = new \Models\Message;
@@ -253,19 +258,21 @@ class User extends Controller {
             
             // Delete messages
             $messageModel->delete('author_id', $userId);
-
+    
             // Delete comments
             $commentModel->delete('author_id', $userId);
     
             // Delete user
             $this->model->delete('id', $userId);
-
+    
             // Redirect
-            return header("location: index.php?controller=user&action=login");
-        }
-        
-        $this->message['text'] = "Vous n'avez pas l'autorisation de supprimer ce compte.";
-        $this->message = false;
-        return header("location: index.php?controller=user&action=update");
+            session_destroy();
+            session_start();
+            $_SESSION['message'] = "Compte supprimé avec succès !";
+            return header("location: index.php");
+
+        } catch (\Exception $e) {
+            $_SESSION['error_message'] = $e->getMessage();
+        } 
     }
 }

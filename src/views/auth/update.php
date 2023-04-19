@@ -87,6 +87,6 @@
     <?php endif ?>
 
     <!-- Delete button -->
-    <a href="index.php?controller=user&action=delete&id=<?= $user['id'] ?>" role="button" class="contrast my-1" onclick="deleteAlert(<?= $user['id'] ?>, 'user')">Supprimer votre compte</a>
+    <a href="javascript: void(0)" role="button" class="contrast my-1" onclick="deleteAlert(<?= $user['id'] ?>, 'user')">Supprimer votre compte</a>
 
 </div>

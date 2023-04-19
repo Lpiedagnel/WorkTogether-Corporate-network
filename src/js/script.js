@@ -5,13 +5,13 @@ function deleteAlert(id, model) {
 
     switch (model) {
         case "message":
-            validation = window.confirm('Souhaitez-vous vraiment supprimer ce message ?') ? true : false
+            validation = window.confirm('Souhaitez-vous vraiment supprimer ce message ?')
             break
         case "comment":
-            validation = window.confirm('Souhaitez-vous supprimer ce commentaire ?') ? true : false
+            validation = window.confirm('Souhaitez-vous supprimer ce commentaire ?')
             break
         case "user":
-            validation = window.confirm('Souhaitez-vous supprimer ce compte ?') ? true : false
+            validation = window.confirm('Souhaitez-vous supprimer ce compte ?')
             break
         default:
             break

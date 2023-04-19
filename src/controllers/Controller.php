@@ -18,7 +18,7 @@ abstract class Controller
     {
         if (!$_SESSION['is_connected']) {
             header("Location: index.php");
-            die();
+            exit();
         }
     }
 }
