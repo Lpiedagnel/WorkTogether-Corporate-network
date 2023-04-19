@@ -133,55 +133,56 @@ class User extends Controller {
             $job = $_POST['job'] ? htmlspecialchars($_POST['job']) : null;
             $password = htmlspecialchars($_POST['password']);
             $password_confirmation = htmlspecialchars($_POST['passwordConfirmation']);
-    
-            // Check password
-            if ($password !== $password_confirmation) {
-                $this->message['text'] = 'Les mots de passe doivent êtres identiques !';
-                $this->message['success'] = false;
-            }
-    
-            // Check email
-            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                $this->message['text'] = 'Vous devez rentrer un email valide';
-                $this->message['success'] = false;
-            }
-    
-            // Password length
-            if (strlen($password) <= 4) {
-                $this->message['text'] = "Vous devez choisir un mot de passe d'au moins 4 caractères !";
-                $this->message['success'] = false;
-            }
 
-            if (!isset($this->message['text']) && $this->message['success'] !== false) {
-                $checkEmail = $this->model->findOne($email, 'email');
-    
-                if ($checkEmail !== false && $checkEmail['email'] !== $_SESSION['email']) {
-                    $this->message['text'] = "L'utilisateur existe déjà.";
-                    $this->message['success'] = false;
-
-                } else {
-                    // Hash
-                    $password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
-                    // Get data
-                    $data = [
-                        'first_name' => $first_name,
-                        'last_name' => $last_name,
-                        'email' => $email,
-                        'job' => $job,
-                        'password' => $password_hash,
-                    ];
-                    // Store to database
-                    $this->model->update($_SESSION['id'] ,$data);
-    
-                    // Update session
-                    $_SESSION['first_name'] = $data['first_name'];
-                    $_SESSION['last_name'] = $data['last_name'];
-                    $_SESSION['email'] = $data['email'];
-    
-                    // Back to index
-                    $this->message['text'] = "Modification du compte réussi !";
-                    $this->message['success'] = true;
+            try {
+                // Check password
+                if ($password !== $password_confirmation) {
+                    throw new \Exception("Les deux mots de passe doivent êtres identiques.");
                 }
+
+                // Check email
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    throw new \Exception("L'adresse mail doit être valide");
+                }
+                
+                // Password length
+                if (strlen($password) <= 4) {
+                    throw new \Exception("Le mot de passe doit faire au moins 4 caractères.");
+                }
+
+                // Find user on database
+                $checkEmail = $this->model->findOne($email, 'email');
+
+                // Check email
+                if ($checkEmail !== false && $checkEmail['email'] !== $_SESSION['email']) {
+                    throw new \Exception("Vous n'avez pas l'autorisation de modifier cet utilisateur.");
+                }
+                
+                // Hash
+                $password_hash = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+
+                // Get data
+                $data = [
+                    'first_name' => $first_name,
+                    'last_name' => $last_name,
+                    'email' => $email,
+                    'job' => $job,
+                    'password' => $password_hash,
+                ];
+                
+                // Store to database
+                $this->model->update($_SESSION['id'] ,$data);
+    
+                // Update session
+                $_SESSION['first_name'] = $data['first_name'];
+                $_SESSION['last_name'] = $data['last_name'];
+                $_SESSION['email'] = $data['email'];
+    
+                // Back to index
+                $_SESSION['message'] = "Le compte a bien été modifié !";
+
+            } catch (\Exception $e) {
+                $_SESSION['error_message'] = $e->getMessage();
             }
         }
 
@@ -216,10 +217,8 @@ class User extends Controller {
 
         $title = "Modifier son profil - WorkTogether";
         $description = "Modifiez votre profil WorkTogether ici !";
-        $message['text'] = $this->message['text'] === null ? '' : $this->message['text'];
-        $message['success'] = $this->message['success'] === true ? true : false;
 
-        \Renderer::render('auth/update', compact('title', 'description', 'user', 'message', 'followedUsers', 'followerUsers'));
+        \Renderer::render('auth/update', compact('title', 'description', 'user', 'followedUsers', 'followerUsers'));
     }
 
     public function upload()
