@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /WorkTogether-Corporate-network/
+
+# Rediriger toutes les demandes de pages inconnues vers index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L]

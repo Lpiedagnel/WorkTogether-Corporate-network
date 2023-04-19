@@ -13,6 +13,12 @@ class User extends Controller {
 
     public function login()
     {
+        // Redirect if user is already connected
+        if (isset($_SESSION['id'])) {
+            header('location: index.php?controller=message&action=feed');
+            exit();
+        }
+
         if (isset($_POST['email']) && isset($_POST['password'])) {
             // Store input into variables
             $email = htmlspecialchars($_POST['email']);

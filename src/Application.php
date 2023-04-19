@@ -7,16 +7,23 @@ class Application {
         $action = "login";
 
         if (!empty($_GET['controller'])) {
-            $controllerName = ucfirst($_GET['controller']);
+            $controllerName = htmlspecialchars(ucfirst($_GET['controller']));
         }
 
         if (!empty($_GET['action'])) {
-            $action = $_GET['action'];
+            $action = htmlspecialchars($_GET['action']);
         }
 
         $controllerName = "\Controllers\\" . $controllerName;
 
-        $controller = new $controllerName();
-        $controller->$action();
+        if (class_exists($controllerName) && method_exists($controllerName, $action)) {
+            $controller = new $controllerName();
+            $controller->$action();
+        } else {
+            $_SESSION['error_message'] = "Cette page n'existe pas.";
+            http_response_code(404);
+            header('location: index.php');
+        }
+
     }
 }
