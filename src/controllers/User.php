@@ -223,20 +223,14 @@ class User extends Controller {
 
     public function upload()
     {
-        $message = Upload::checkUpload($_FILES);
-        if (!isset($message)) {
-            list($message, $target_path) = Upload::upload($this->model);
+        $isValid = Upload::checkUpload($_FILES);
+        if ($isValid === true) {
+            list($target_path) = Upload::upload($this->model);
             $data = ['img_path' => $target_path];
             $this->model->update($_SESSION['id'], $data);
         }
 
-        $user = $this->model->findOne($_SESSION['id'], 'id');
-        $title = "Modifier votre profil - WorkTogether";
-        $description = "Modifiez votre profil WorkTogether ici !";
-        $message['text'] = $message['text'] === null ? '' : $message['text'];
-        $message['success'] = $message['success'] === true ? true : false;
-
-        \Renderer::render('auth/update', compact('title', 'description', 'user', 'message'));
+        header('location: index.php?controller=user&action=update');
     }
 
     public function delete()
