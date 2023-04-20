@@ -31,8 +31,11 @@ abstract class Content extends Controller
         }
         // Check if upload
         if ((!empty($_FILES['img']['name']))) {
-            list($message, $target_path) = Upload::upload($this->model);
-            $data += ['img_path' => $target_path]; 
+            $isValid = Upload::checkUpload();
+            if ($isValid) {
+                list($target_path) = Upload::upload($this->model);
+                $data += ['img_path' => $target_path]; 
+            }
         }
 
         $this->model->insert($data);
@@ -42,15 +45,25 @@ abstract class Content extends Controller
 
     public function update()
     {
-        // Check
-        if (isset($_GET['id']) && isset($_SESSION['id'])) {
+        try {
+
+            // Check
+            if (!isset($_GET['id']) || !isset($_SESSION['id'])) {
+                throw new \Exception("L'accès est invalide.");
+            }
 
             $this->checkAuth();
 
             $contentId = htmlspecialchars($_GET['id']);
             $controller = htmlspecialchars($_GET['controller']);
 
+                    
             if (($post = $this->model->findOne($contentId, 'id'))) {
+                
+                $title = "Modifier un message - WorkTogether";
+                $description = "Vous pouvez modifier votre message ici.";
+        
+                \Renderer::render('messages/update',compact('title', 'description', 'post', 'controller'));
 
                 // If submit
                 if (isset($_POST) && isset($_POST['text']) && $post['author_id'] === $_SESSION['id']) {
@@ -61,18 +74,16 @@ abstract class Content extends Controller
 
                     $this->model->update($post['id'], $data);
                     header('location: index.php?controller=message&action=feed');
-                    
-                } else {
-                    $title = "Modifier un message - WorkTogether";
-                    $description = "Vous pouvez modifier votre message ici.";
-            
-                    \Renderer::render('messages/update',compact('title', 'description', 'post', 'controller'));
                 }
 
             } else {
-                $message['text'] = "Contenu non trouvé ou non autorisé.";
-                $message['success'] = false;
+                throw new \Exception("Le contenu n'existe pas.");
             }
+                    
+        } catch (\Exception $e) {
+            $_SESSION['error_message'] = $e->getMessage();
+            header('location: index.php?controller=message&action=feed');
+            exit();
         }
     }
 

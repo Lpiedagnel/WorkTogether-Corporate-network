@@ -21,9 +21,7 @@ class Application {
             $controller->$action();
         } else {
             $_SESSION['error_message'] = "Cette page n'existe pas.";
-            http_response_code(404);
             header('location: index.php');
         }
-
     }
 }
