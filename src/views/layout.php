@@ -29,8 +29,15 @@
        <?php endif ?> 
     </ul>
 </nav>
+<?= isset($_SESSION['message']) ? '<p class="text-success text-center">' . $_SESSION['message'] . '</p>' : '' ?>
+<?= isset($_SESSION['error_message']) ? '<p class="text-alert text-center">' . $_SESSION['error_message'] . '</p>' : '' ?>
 <!-- Main -->
 <?= $pageContent ?>
 <script src="src/js/script.js"></script>
 </body>
 </html>
+<?php
+    // Delete message if exist
+    unset($_SESSION['message']);
+    unset($_SESSION['error_message']);
+?>

@@ -12,17 +12,13 @@ abstract class Controller
     {
         session_start();
         $this->model = new $this->modelName();
-        $this->message = [
-            'text' => null, 
-            'success' => null
-        ];
     }
 
     public function checkAuth()
     {
         if (!$_SESSION['is_connected']) {
             header("Location: index.php");
-            die();
+            exit();
         }
     }
 }

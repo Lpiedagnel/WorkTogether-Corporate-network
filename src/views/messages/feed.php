@@ -42,11 +42,11 @@
                 ?>
                 <div class="my-1">
                     <!-- Like button -->
-                    <a href="#" onclick="socialInteraction(event, 'likes', <?= $post['id'] ?>)">&#x1F499; J'aime ! <?= $post['likesNumber'] > 0 ? "({$post['likesNumber']})" : "" ?></a>
+                    <a href="javascript: void(0)" onclick="socialInteraction(event, 'likes', <?= $post['id'] ?>)">&#x1F499; J'aime ! <?= $post['likesNumber'] > 0 ? "({$post['likesNumber']})" : "" ?></a>
                     <?php if ($_SESSION['id'] === $post['author_id']): ?>
                        <!-- If author --> 
                         <a href="index.php?controller=message&action=update&id=<?= $post['id'] ?>" class="mx-2"> Éditer</a>
-                        <a href="#" class="mx-2" onclick="deleteAlert(<?= $post['id'] ?>, 'message')">Supprimer</a>
+                        <a href="javascript: void(0)" class="mx-2" onclick="deleteAlert(<?= $post['id'] ?>, 'message')">Supprimer</a>
                     <?php endif ?>
                 </div>
                <!-- Comments --> 
@@ -77,7 +77,7 @@
                             <small>
                                 <?php if ($_SESSION['id'] === $comment['author_id']): ?>
                                     <a href="index.php?controller=comment&action=update&id=<?= $comment['id'] ?>" class="mx-2"> Éditer</a>
-                                    <a href="#" class="mx-2" onclick="deleteAlert(<?= $comment['id'] ?>, 'comment')">Supprimer</a>
+                                    <a href="javascript: void(0)" class="mx-2" onclick="deleteAlert(<?= $comment['id'] ?>, 'comment')">Supprimer</a>
                                 <?php endif ?>
                             </small>
                         </li>
@@ -94,7 +94,7 @@
             <div class="my-2 flex-center">
                 <img class="img-200 radius-5" src="<?= $user['img_path'] ?>" alt="Photo de <?= $user['first_name'] ?>">
                 <h4 class="my-0"><?= $user['first_name'] . ' ' . $user['last_name'] ?></h4>
-                <a class="t-center" role="button" href="#" onclick="socialInteraction(event, 'follow', <?= $user['id'] ?>)">Suivre</a>
+                <a class="t-center" role="button" href="javascript: void(0)" onclick="socialInteraction(event, 'follow', <?= $user['id'] ?>)">Suivre</a>
             </div>
            <?php endforeach ?> 
         </aside>
