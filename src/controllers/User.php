@@ -247,11 +247,12 @@ class User extends Controller {
 
         $id = htmlspecialchars($_GET['id']);
         $userId = htmlspecialchars($_SESSION['id']);
+        $isAdmin = $this->model->checkAdmin();
 
         try {
 
             // Check if user has the right to delete this account.
-            if ($userId !== $id) {
+            if (($userId !== $id) && ($isAdmin !== true)) {
                 throw new \Exception("Vous n'avez pas la permission de supprimer ce compte.");
             }
 
@@ -280,6 +281,45 @@ class User extends Controller {
 
         } catch (\Exception $e) {
             $_SESSION['error_message'] = $e->getMessage();
+            header('location: index.php');
+            exit();
         } 
+    }
+
+    public function admin()
+    {
+        $this->checkAuth();
+
+        try {
+            // If user not admin
+            $isAdmin = $this->model->checkAdmin();
+            if ($isAdmin !== true) {
+                throw new \Exception("Vous n'avez pas l'autorisation pour accéder à cette page");
+            }
+
+            // Get all users
+            $usersData = $this->model->findAll();
+
+            $users = [];
+            // Select the informations we want (and don't send directly the password)
+            foreach ($usersData as $userData) {
+                $user['id'] = $userData['id'];
+                $user['first_name'] = $userData['first_name'];
+                $user['last_name'] = $userData['last_name'];
+                $user['img_path'] = $userData['img_path'];
+
+                $users[] = $user;
+            }
+
+            $title = "WorkTogether - Panneau d'administration";
+            $description = "Panneau réservé uniquement au compte administrateur de WorkTogether";
+    
+            \Renderer::render('auth/admin', compact('title', 'description', 'users'));
+
+        } catch (\Exception $e) {
+            $_SESSION['error_message'] = $e->getMessage();
+            header('location: index.php');
+            exit();
+        }
     }
 }

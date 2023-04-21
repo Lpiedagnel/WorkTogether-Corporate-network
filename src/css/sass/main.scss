@@ -111,6 +111,17 @@
         justify-content: space-around;
         align-items: center;
     }
+
+    &-user {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        @include tablet {
+            flex-direction: column;
+        }
+    }
 }
 
 //Img

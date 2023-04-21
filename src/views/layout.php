@@ -24,7 +24,7 @@
             <li><a href="index.php?controller=user&action=logout">Déconnexion</a></li>
             <li><a href="index.php?controller=user&action=update" role="button">Profil</a></li>
             <?php if ($_SESSION['is_admin'] === 1): ?>
-                <li><a href="#" role="button" class="secondary">Administration</a></li>
+                <li><a href="index.php?controller=user&action=admin" role="button" class="secondary">Administration</a></li>
             <?php endif ?>
         <?php else: ?>
             <li><a href="index.php">Se connecter</a></li>

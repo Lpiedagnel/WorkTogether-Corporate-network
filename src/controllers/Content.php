@@ -2,7 +2,6 @@
 
 namespace Controllers;
 
-use Exception;
 use Upload;
 
 require_once('src/autoload.php');
