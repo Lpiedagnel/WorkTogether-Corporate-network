@@ -35,6 +35,7 @@ class User extends Controller {
                     $_SESSION['email'] = $user['email'];
                     $_SESSION['id'] = $user['id'];
                     $_SESSION['is_connected'] = true;
+                    $_SESSION['is_admin'] = $user['is_admin'];
                     $_SESSION['message'] = "Connexion réussie !";
                     header("location: index.php?controller=message&action=feed");
                     exit();

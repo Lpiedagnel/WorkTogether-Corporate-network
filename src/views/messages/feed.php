@@ -43,7 +43,7 @@
                 <div class="my-1">
                     <!-- Like button -->
                     <a href="javascript: void(0)" onclick="socialInteraction(event, 'likes', <?= $post['id'] ?>)">&#x1F499; J'aime ! <?= $post['likesNumber'] > 0 ? "({$post['likesNumber']})" : "" ?></a>
-                    <?php if ($_SESSION['id'] === $post['author_id']): ?>
+                    <?php if (($_SESSION['id'] === $post['author_id']) || ($_SESSION['is_admin'] === 1)): ?>
                        <!-- If author --> 
                         <a href="index.php?controller=message&action=update&id=<?= $post['id'] ?>" class="mx-2"> Éditer</a>
                         <a href="javascript: void(0)" class="mx-2" onclick="deleteAlert(<?= $post['id'] ?>, 'message')">Supprimer</a>
@@ -75,7 +75,7 @@
                                 <?= $comment['text'] ?>
                             </p>
                             <small>
-                                <?php if ($_SESSION['id'] === $comment['author_id']): ?>
+                                <?php if (($_SESSION['id'] === $comment['author_id']) || $_SESSION['is_admin'] === 1): ?>
                                     <a href="index.php?controller=comment&action=update&id=<?= $comment['id'] ?>" class="mx-2"> Éditer</a>
                                     <a href="javascript: void(0)" class="mx-2" onclick="deleteAlert(<?= $comment['id'] ?>, 'comment')">Supprimer</a>
                                 <?php endif ?>

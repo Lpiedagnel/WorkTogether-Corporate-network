@@ -53,20 +53,24 @@ abstract class Content extends Controller
             }
 
             $this->checkAuth();
-
+            $userId = $_SESSION['id'];
             $contentId = htmlspecialchars($_GET['id']);
             $controller = htmlspecialchars($_GET['controller']);
 
                     
             if (($post = $this->model->findOne($contentId, 'id'))) {
-                
-                $title = "Modifier un message - WorkTogether";
-                $description = "Vous pouvez modifier votre message ici.";
-        
-                \Renderer::render('messages/update',compact('title', 'description', 'post', 'controller'));
+
+                // Check if user is admin or not
+                $userModel = new \Models\User;
+                $isAdmin = $userModel->checkAdmin();
+
+                // Check if user can update the content
+                if (!($userId === $post['author_id']) && ($isAdmin !== true)) {
+                    throw new \Exception("Vous n'avez pas le droit de modifier ce contenu");
+                }
 
                 // If submit
-                if (isset($_POST) && isset($_POST['text']) && $post['author_id'] === $_SESSION['id']) {
+                if (isset($_POST) && isset($_POST['text'])) {
                     $data = [
                         'text' => htmlspecialchars($_POST['text']),
                         // file
@@ -75,6 +79,12 @@ abstract class Content extends Controller
                     $this->model->update($post['id'], $data);
                     header('location: index.php?controller=message&action=feed');
                 }
+                
+                $title = "Modifier un message - WorkTogether";
+                $description = "Vous pouvez modifier votre message ici.";
+        
+                \Renderer::render('messages/update',compact('title', 'description', 'post', 'controller'));
+
 
             } else {
                 throw new \Exception("Le contenu n'existe pas.");
@@ -96,11 +106,16 @@ abstract class Content extends Controller
             $contentId = htmlspecialchars($_GET['id']);
             $authorId = $_SESSION['id'];
 
+            $userModel = new \Models\User;
+
+            // Check admin
+            $isAdmin = $userModel->checkAdmin();
+
             try {
                 if ($content = $this->model->findOne($contentId, 'id')) {
                     
                     // Check if user has the right to delete the content
-                    if ($authorId === $content['author_id']) {
+                    if (($authorId === $content['author_id']) || $isAdmin === true) {
                         $this->model->delete('id', $contentId);
                         
                         // Delete commentary
@@ -108,17 +123,21 @@ abstract class Content extends Controller
                             $commentModel = new \Models\Comment;
                             $commentModel->delete('message_id', $contentId);
                         }
+
+                        $_SESSION['message'] = "Suppression réussie !";
+
+                    } else {
+                        throw new \Exception("Vous n'avez pas l'autorisation de supprimer ce contenu.");
                     }
-                    $_SESSION['message'] = "Suppression réussie !";
                 }
             } catch (\Exception $e) {
                 if ($e instanceof \PDOException) {
                     $_SESSION['error_message'] = "Une erreur est survenue dans la connexion à la base de données. Réessayez plus tard !";
                 } else {
-                    $_SESSION['error_message'] = "Une erreur est survenue. Réessayez plus tard !";
+                    $_SESSION['error_message'] = $e->getMessage();
                 }
             } finally {
-                header("location: index.php?controller=message&action=feed");
+                header('location: index.php?controller=message&action=feed');
             }
         }
     }
