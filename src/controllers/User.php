@@ -250,7 +250,6 @@ class User extends Controller {
         $isAdmin = $this->model->checkAdmin();
 
         try {
-
             // Check if user has the right to delete this account.
             if (($userId !== $id) && ($isAdmin !== true)) {
                 throw new \Exception("Vous n'avez pas la permission de supprimer ce compte.");
@@ -261,23 +260,31 @@ class User extends Controller {
             $commentModel = new \Models\Comment;
             
             // Delete follow
-            $followModel->delete('follower_id', $userId);
-            $followModel->delete('followed_id', $userId);
+            $followModel->delete('follower_id', $id);
+            $followModel->delete('followed_id', $id);
             
             // Delete messages
-            $messageModel->delete('author_id', $userId);
+            $messageModel->delete('author_id', $id);
     
             // Delete comments
-            $commentModel->delete('author_id', $userId);
+            $commentModel->delete('author_id', $id);
     
             // Delete user
-            $this->model->delete('id', $userId);
+            $this->model->delete('id', $id);
+
+            // Change redirection if user is admin or not
+            if ($isAdmin === true) {
+                $_SESSION['message'] = "Compte supprimé avec succès !";
+                return header("location: index.php?controller=user&action=admin");
+                exit();
+            }
     
             // Redirect
             session_destroy();
             session_start();
             $_SESSION['message'] = "Compte supprimé avec succès !";
-            return header("location: index.php");
+            header("location: index.php");
+            exit();
 
         } catch (\Exception $e) {
             $_SESSION['error_message'] = $e->getMessage();
