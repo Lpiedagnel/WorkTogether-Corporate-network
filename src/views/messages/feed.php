@@ -67,7 +67,10 @@
                                 <img src="<?= $comment['authorAvatar'] ?>"alt="Photo de profil de l'utilisateur" class="radius-5"> 
                                 <div class="text-center">
                                     <h4 class="my-0"><?= $comment['authorFirstName'] . ' ' . $comment['authorLastName'] ?> </h4>
-                                    <small><?= $comment['authorJob'] . " - le " . date('d/m/Y',strtotime($comment['created_at'])) ?></small>
+                                    <small>
+                                        <?= $comment['authorJob'] ? $comment['authorJob'] . ' - ' : '' ?>
+                                        <?= "le " . date('d/m/Y',strtotime($comment['created_at'])) ?>
+                                    </small>
                                     <hr>
                                 </div>
                             </div>

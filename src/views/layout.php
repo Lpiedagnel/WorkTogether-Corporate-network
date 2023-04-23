@@ -36,6 +36,7 @@
 <?= isset($_SESSION['error_message']) ? '<p class="text-alert text-center">' . $_SESSION['error_message'] . '</p>' : '' ?>
 <!-- Main -->
 <?= $pageContent ?>
+<small class="flex-center">@Lucas Piedagnel</small>
 <script src="src/js/script.js"></script>
 </body>
 </html>
