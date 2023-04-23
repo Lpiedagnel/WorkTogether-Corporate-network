@@ -8,7 +8,7 @@ Technically, the project is in PHP, following the conventions of the MVC archite
 
 This repository is primarily a personal project aimed at practicing PHP. It is therefore not (in my opinion) quite ready for real-world use (we will come back to this), but some features may be added later.
 
-![Login page of WorkTogether](https://imgur.com/fSAJ7wC)
+![Login page of WorkTogether](https://imgur.com/fSAJ7wC.png)
 
 
 ## WorkTogether Features
@@ -24,7 +24,7 @@ WorkTogether is an enterprise social network with the following features:
 - Administrator account with privileged access to the moderation panel
 - Management of error messages
 
-![Feed of WorkTogether](https://imgur.com/VYv80Gt)
+![Feed of WorkTogether](https://imgur.com/VYv80Gt.png)
 
 
 ## WorkTogether Installation
@@ -47,7 +47,7 @@ For the admin account, the credentials are as follows:
 Email: `admin@worktogether.com`
 Password: `test1`
 
-![Admin Page of WorkTogether](https://imgur.com/91QKPuz)
+![Admin Page of WorkTogether](https://imgur.com/91QKPuz.png)
 
 
 ## Improvement areas
@@ -71,4 +71,4 @@ In conclusion, WorkTogether is a good training tool. And I recommend that you tr
 
 All that remains is for me to wish you happy coding!
 
-![Update Profil for WorKTogether](https://imgur.com/Em2DnkP)
+![Update Profil for WorKTogether](https://imgur.com/Em2DnkP.png)
