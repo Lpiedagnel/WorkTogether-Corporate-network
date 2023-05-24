@@ -70,6 +70,9 @@ class User extends Controller {
         if (isset($_POST['firstName']) && isset($_POST['lastName']) && isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordConfirmation'])) {
             
             try {
+                // Test version
+                throw New \Exception("Il n'est pas possible de s'inscrire sur la version de test de WorkTogether. Veuillez vous connecter avec le compte de test pour visiter l'application. =)");
+
                 // Store input into variables
                 $first_name = htmlspecialchars($_POST['firstName']);
                 $last_name = htmlspecialchars($_POST['lastName']);
@@ -142,6 +145,9 @@ class User extends Controller {
             $password_confirmation = htmlspecialchars($_POST['passwordConfirmation']);
 
             try {
+            // Test version
+            throw New \Exception("Il n'est pas possible de modifier le compte de test !");
+
                 // Check password
                 if ($password !== $password_confirmation) {
                     throw new \Exception("Les deux mots de passe doivent êtres identiques.");
@@ -250,6 +256,9 @@ class User extends Controller {
         $isAdmin = $this->model->checkAdmin();
 
         try {
+            // Test version
+            throw New \Exception("Il n'est pas possible de supprimer un compte sur la version de test de WorkTogether.");
+
             // Check if user has the right to delete this account.
             if (($userId !== $id) && ($isAdmin !== true)) {
                 throw new \Exception("Vous n'avez pas la permission de supprimer ce compte.");

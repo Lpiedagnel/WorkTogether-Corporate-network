@@ -4,9 +4,14 @@ class upload
 {
     public static function checkUpload() {
 
+        
         $isValid = false;
-
+        
         try {
+            
+            // Test version
+            throw New \Exception("Il n'est pas possible de télécharger des images sur la version de test de WorkTogether.");
+
             // Check if not empty
             if (empty($_FILES)) {
                 throw new \Exception("Aucun fichier envoyé.");
