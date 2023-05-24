@@ -143,3 +143,23 @@
         object-fit: cover;
     }
 }
+
+// Navbar
+.navbar {
+    &__link {
+        &--mobile {
+            display: none;
+        }
+    }
+
+    @include mobile {
+        &__link {
+            &--desktop {
+                display: none;
+            }
+            &--mobile {
+                display: block;
+            }
+        }
+    }
+}
